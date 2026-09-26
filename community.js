@@ -75,6 +75,10 @@
 
   async function loadAuth() {
     if (!setupGuard()) return;
+    const authMessage = (key, fallback, detail = "") => {
+      const translate = window.XART_AUTH_TRANSLATE;
+      return typeof translate === "function" ? translate(key, detail) : `${fallback}${detail}`;
+    };
     const loginForm = $("#login-form");
     const registerForm = $("#register-form");
     const phoneForm = $("#phone-form");
@@ -86,27 +90,30 @@
       $$("[data-auth-mode]").forEach((item) => item.classList.toggle("active", item === button));
       loginForm.classList.toggle("hidden", button.dataset.authMode !== "login");
       registerForm.classList.toggle("hidden", button.dataset.authMode !== "register");
+      phoneForm.classList.toggle("hidden", button.dataset.authMode === "register");
       message("");
     }));
     $$(`[data-oauth]`).forEach((button) => button.addEventListener("click", async () => {
-      const redirectTo = new URL("community.html", window.location.href).href;
+      const redirectTo = window.location.protocol === "file:"
+        ? "https://x-art-lab.pages.dev/community.html"
+        : new URL("community.html", window.location.href).href;
       const { error } = await client.auth.signInWithOAuth({ provider: button.dataset.oauth, options: { redirectTo } });
-      if (error) message(`第三方登录失败：${error.message}`);
+      if (error) message(authMessage("oauthError", "第三方登录失败：", error.message));
     }));
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = new FormData(loginForm);
       const { error } = await client.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
-      if (error) { message(`登录失败：${error.message}`); return; }
+      if (error) { message(authMessage("loginError", "登录失败：", error.message)); return; }
       location.href = "community.html";
     });
     registerForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = new FormData(registerForm);
-      if (form.get("password") !== form.get("confirm_password")) { message("两次输入的密码不一致。"); return; }
+      if (form.get("password") !== form.get("confirm_password")) { message(authMessage("passwordMismatch", "两次输入的密码不一致。")); return; }
       const { data, error } = await client.auth.signUp({ email: form.get("email"), password: form.get("password"), options: { data: { display_name: form.get("display_name") } } });
-      if (error) { message(`注册失败：${error.message}`); return; }
-      message(data.session ? "注册成功，正在进入文库。" : "注册成功。请查收验证邮件，再返回登录。", "success");
+      if (error) { message(authMessage("registerError", "注册失败：", error.message)); return; }
+      message(data.session ? authMessage("registerSuccess", "注册成功，正在进入文库。") : authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。"), "success");
       if (data.session) setTimeout(() => { location.href = "community.html"; }, 700);
     });
     phoneForm.addEventListener("submit", async (event) => {
@@ -115,17 +122,17 @@
       const phone = String(form.get("phone") || "").trim();
       if (!phoneCodeSent) {
         const { error } = await client.auth.signInWithOtp({ phone, options: { channel: "sms" } });
-        if (error) { message(`发送验证码失败：${error.message}`); return; }
+        if (error) { message(authMessage("sendError", "发送验证码失败：", error.message)); return; }
         phoneCodeSent = true;
         phoneCodeRow.classList.remove("hidden");
         phoneSend.classList.add("hidden");
         phoneVerify.classList.remove("hidden");
-        message("验证码已发送，请检查短信。", "success");
+        message(authMessage("codeSent", "验证码已发送，请检查短信。"), "success");
         return;
       }
       const token = String(form.get("token") || "").trim();
       const { error } = await client.auth.verifyOtp({ phone, token, type: "sms" });
-      if (error) { message(`验证码登录失败：${error.message}`); return; }
+      if (error) { message(authMessage("verifyError", "验证码登录失败：", error.message)); return; }
       location.href = "community.html";
     });
   }

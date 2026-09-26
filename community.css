@@ -88,6 +88,10 @@ body.community-body {
 /* Auth screen: quiet white app surface with a compact Swiss-style control card. */
 .auth-page { background: #fff; }
 .auth-page .community-header { border-bottom-color: #e5e7e9; }
+.auth-page .community-header { grid-template-columns: auto 1fr auto auto; }
+.language-switcher { display: flex; align-items: center; gap: 3px; }
+.language-switcher button { border: 1px solid transparent; background: transparent; color: var(--community-muted); cursor: pointer; font: inherit; font-size: 10px; letter-spacing: .08em; line-height: 1; padding: 6px 7px; }
+.language-switcher button:hover, .language-switcher button.active { border-color: var(--community-ink); color: var(--community-ink); }
 .auth-main { display: grid; place-items: center; min-height: calc(100vh - 142px); padding: 64px 0 86px; }
 .auth-shell { width: min(100%, 620px); }
 .auth-card { padding: clamp(28px, 5vw, 46px); border: 1px solid #e1e4e6; border-radius: 18px; background: #fff; box-shadow: 0 20px 60px rgba(23,25,28,.07); }
@@ -105,6 +109,7 @@ body.community-body {
 .auth-note { font-size: 12px; }
 @media (max-width: 800px) {
   .community-header { grid-template-columns: 1fr auto; }
+  .auth-page .community-header { grid-template-columns: auto 1fr auto auto; gap: 14px; }
   .community-nav { grid-column: 1 / -1; order: 3; }
   .community-grid { grid-template-columns: 1fr 1fr; }
   .community-tools { align-items: flex-start; flex-direction: column; }
@@ -113,6 +118,7 @@ body.community-body {
 }
 @media (max-width: 560px) {
   .community-shell { width: min(100% - 28px, 1180px); }
+  .auth-page .community-header { grid-template-columns: auto 1fr auto auto; gap: 8px; }
   .community-grid { grid-template-columns: 1fr; }
   .community-main { padding-top: 44px; }
   .community-form-card { padding: 22px; }
