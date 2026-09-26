@@ -81,6 +81,25 @@
     };
     const loginForm = $("#login-form");
     const registerForm = $("#register-form");
+    $$('[data-password-toggle]').forEach((button) => {
+      const input = document.getElementById(button.dataset.passwordToggle);
+      if (!input) return;
+      const updateToggleLabel = () => {
+        const visible = input.type === "text";
+        const key = visible ? "hidePassword" : "showPassword";
+        const fallback = visible ? "隐藏密码" : "显示密码";
+        const label = authMessage(key, fallback);
+        button.classList.toggle("is-visible", visible);
+        button.setAttribute("aria-pressed", String(visible));
+        button.setAttribute("aria-label", label);
+        button.title = label;
+      };
+      button.addEventListener("click", () => {
+        input.type = input.type === "password" ? "text" : "password";
+        updateToggleLabel();
+      });
+      updateToggleLabel();
+    });
     $$("[data-auth-mode]").forEach((button) => button.addEventListener("click", () => {
       $$("[data-auth-mode]").forEach((item) => item.classList.toggle("active", item === button));
       loginForm.classList.toggle("hidden", button.dataset.authMode !== "login");
