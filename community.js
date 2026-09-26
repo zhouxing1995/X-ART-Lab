@@ -115,7 +115,7 @@
       const form = new FormData(loginForm);
       const { error } = await client.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
       if (error) { message(authMessage("loginError", "登录失败：", error.message)); return; }
-      location.href = "community.html";
+      location.href = new URLSearchParams(location.search).get("next") === "/" ? "/?from=auth" : "community.html";
     });
     registerForm.addEventListener("submit", async (event) => {
       event.preventDefault();
