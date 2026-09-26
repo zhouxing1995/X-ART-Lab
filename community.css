@@ -143,3 +143,36 @@ body.community-body {
   .phone-input-group { grid-template-columns: 1fr; }
   .moderation-row { grid-template-columns: 1fr; }
 }
+/* Authentication form refinements */
+.auth-form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+}
+.auth-forgot-link {
+  padding: 8px 0;
+  border: 0;
+  background: transparent;
+  color: var(--community-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+.auth-forgot-link:hover,
+.auth-forgot-link:focus-visible {
+  color: var(--community-red);
+}
+.auth-form-heading {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+}
+.auth-form-intro {
+  margin: 0;
+  color: var(--community-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
