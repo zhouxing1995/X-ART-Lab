@@ -12,10 +12,14 @@
   }
 
   function message(text, tone = "") {
-    const node = $("[data-message]");
-    if (!node) return;
-    node.textContent = text;
-    node.className = `community-message ${tone}`;
+    const nodes = $$('[data-message]');
+    if (!nodes.length) return;
+    nodes.forEach((node) => {
+      node.textContent = text;
+      node.hidden = !text;
+      const messageClass = page === "auth" ? "auth-message" : "community-message";
+      node.className = text ? `${messageClass} ${tone}` : "hidden";
+    });
   }
 
   function setupGuard() {

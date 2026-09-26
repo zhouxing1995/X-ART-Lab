@@ -47,6 +47,10 @@ body.community-body {
 .article-card .article-read { margin-top: auto; color: var(--community-ink); text-decoration: none; font-size: 12px; }
 .article-card .article-read:hover { color: var(--community-red); }
 .community-empty, .community-message { padding: 24px; border: 1px solid var(--community-line); background: white; color: var(--community-muted); line-height: 1.6; }
+.auth-message { margin: 0; color: var(--community-muted); font-size: 12px; line-height: 1.5; }
+.auth-message.success { color: #2e6b4b; }
+.auth-message.setup-message { color: var(--community-red); }
+.auth-card .form-actions .auth-message { flex: 1 1 240px; align-self: center; }
 .community-form-shell { max-width: 720px; margin: 0 auto; }
 .community-form-card { padding: 34px; background: white; border: 1px solid var(--community-line); }
 .community-form-card h1 { margin: 0 0 12px; font-size: 36px; letter-spacing: -.06em; }
