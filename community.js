@@ -18,7 +18,7 @@
       node.textContent = text;
       node.hidden = !text;
       const messageClass = page === "auth" ? "auth-message" : "community-message";
-      node.className = text ? `${messageClass} ${tone}` : "hidden";
+      node.className = text ? messageClass + " " + tone : "hidden";
     });
   }
 
@@ -40,22 +40,23 @@
       node.innerHTML = '<a href="auth.html">登录 / 注册</a>';
       return;
     }
-    node.innerHTML = `<span>${escapeHtml(user.user_metadata?.display_name || user.email || "Contributor")}</span><a href="editor.html">写文章</a><button class="community-action" data-signout>退出</button>`;
+    const displayName = escapeHtml(user.user_metadata?.display_name || user.email || "Contributor");
+    node.innerHTML = '<span>' + displayName + '</span><a href="editor.html">写文章</a><button class="community-action" data-signout>退出</button>';
     const signout = $("[data-signout]");
     if (signout) signout.addEventListener("click", async () => { await client.auth.signOut(); location.href = "community.html"; });
   }
 
   function slugify(title) {
     const base = title.toLowerCase().trim().replace(/[^a-z0-9\u4e00-\u9fff]+/g, "-").replace(/^-|-$/g, "").slice(0, 70);
-    return `${base || "article"}-${Date.now().toString(36)}`;
+    return (base || "article") + "-" + Date.now().toString(36);
   }
 
   function articleCard(article) {
     const cover = article.cover_url
-      ? `<img class="article-cover" src="${escapeHtml(article.cover_url)}" alt="${escapeHtml(article.title)}">`
+      ? '<img class="article-cover" src="' + escapeHtml(article.cover_url) + '" alt="' + escapeHtml(article.title) + '">'
       : '<div class="article-cover placeholder">X-ART / LIBRARY</div>';
     const author = article.profiles?.display_name || "X Art Lab Contributor";
-    return `<article class="article-card"><a href="article.html?id=${encodeURIComponent(article.id)}">${cover}</a><p class="article-meta">${escapeHtml(article.locale || "zh")} / ${escapeHtml(author)}</p><h3>${escapeHtml(article.title)}</h3><p>${escapeHtml(article.excerpt || "")}</p><a class="article-read" href="article.html?id=${encodeURIComponent(article.id)}">阅读文章 ↘</a></article>`;
+    return '<article class="article-card"><a href="article.html?id=' + encodeURIComponent(article.id) + '">' + cover + '</a><p class="article-meta">' + escapeHtml(article.locale || "zh") + ' / ' + escapeHtml(author) + '</p><h3>' + escapeHtml(article.title) + '</h3><p>' + escapeHtml(article.excerpt || "") + '</p><a class="article-read" href="article.html?id=' + encodeURIComponent(article.id) + '">阅读文章 ↘</a></article>';
   }
 
   async function loadCommunity() {
@@ -67,9 +68,9 @@
     async function fetchArticles() {
       let query = client.from("articles").select("id,title,excerpt,cover_url,locale,published_at,author_id,profiles(display_name)").eq("category", "x-art-library").eq("status", "published").order("published_at", { ascending: false });
       const term = (search?.value || "").trim();
-      if (term) query = query.ilike("title", `%${term}%`);
+      if (term) query = query.ilike("title", "%" + term + "%");
       const { data, error } = await query;
-      if (error) { message(`加载文章失败：${error.message}`); return; }
+      if (error) { message("加载文章失败：" + error.message); return; }
       if (!data?.length) { list.innerHTML = '<div class="community-empty">还没有公开文章。登录后可以提交你的第一篇文库文章。</div>'; return; }
       list.innerHTML = data.map(articleCard).join("");
     }
@@ -81,10 +82,32 @@
     if (!setupGuard()) return;
     const authMessage = (key, fallback, detail = "") => {
       const translate = window.XART_AUTH_TRANSLATE;
-      return typeof translate === "function" ? translate(key, detail) : `${fallback}${detail}`;
+      return typeof translate === "function" ? translate(key, detail) : fallback + detail;
+    };
+    const authError = (key, fallback, error) => {
+      const detail = String(error?.message || "");
+      const normalized = detail.toLowerCase();
+      if (key === "loginError") {
+        if (normalized.includes("invalid login credentials") || normalized.includes("invalid login")) return authMessage("invalidCredentials", "邮箱或密码不正确。");
+        if (normalized.includes("email not confirmed")) return authMessage("emailNotConfirmed", "邮箱尚未验证，请先查收验证邮件。");
+      }
+      if (key === "registerError" && (normalized.includes("already registered") || normalized.includes("already exists"))) return authMessage("registerAlreadyExists", "这个邮箱已经注册，请直接登录或重置密码。");
+      if ((key === "registerError" || key === "recoveryError") && (normalized.includes("error sending") || normalized.includes("smtp") || normalized.includes("535") || normalized.includes("unexpected_failure"))) return authMessage("emailDeliveryError", "验证邮件暂时发送失败，请稍后重试。");
+      return authMessage(key, fallback, detail);
     };
     const loginForm = $("#login-form");
     const registerForm = $("#register-form");
+    const recoveryForm = $("#recovery-form");
+    const updatePasswordForm = $("#update-password-form");
+    const forms = [loginForm, registerForm, recoveryForm, updatePasswordForm].filter(Boolean);
+    const showAuthMode = (mode) => {
+      forms.forEach((form) => {
+        const shouldShow = (mode === "update" && form === updatePasswordForm) || form.id === mode + "-form";
+        form.classList.toggle("hidden", !shouldShow);
+      });
+      $$('[data-auth-mode]').forEach((item) => item.classList.toggle("active", item.dataset.authMode === mode));
+      message("");
+    };
     $$('[data-password-toggle]').forEach((button) => {
       const input = document.getElementById(button.dataset.passwordToggle);
       if (!input) return;
@@ -104,41 +127,68 @@
       });
       updateToggleLabel();
     });
-    $$("[data-auth-mode]").forEach((button) => button.addEventListener("click", () => {
-      $$("[data-auth-mode]").forEach((item) => item.classList.toggle("active", item === button));
-      loginForm.classList.toggle("hidden", button.dataset.authMode !== "login");
-      registerForm.classList.toggle("hidden", button.dataset.authMode !== "register");
-      message("");
-    }));
-    loginForm.addEventListener("submit", async (event) => {
+    $$('[data-auth-mode]').forEach((button) => button.addEventListener("click", () => showAuthMode(button.dataset.authMode)));
+    $$('[data-auth-action]').forEach((button) => button.addEventListener("click", () => showAuthMode(button.dataset.authAction)));
+    const params = new URLSearchParams(location.search);
+    if (params.get("mode") === "update-password" || window.location.hash.includes("type=recovery")) showAuthMode("update");
+    else showAuthMode("login");
+
+    const publicAuthUrl = () => {
+      if (window.location.protocol === "file:") return "https://x-art-lab.pages.dev/auth";
+      return new URL("auth", window.location.origin).href;
+    };
+    const passwordResetUrl = () => {
+      if (window.location.protocol === "file:") return "https://x-art-lab.pages.dev/auth?mode=update-password";
+      const url = new URL("auth", window.location.origin);
+      url.searchParams.set("mode", "update-password");
+      return url.href;
+    };
+    if (loginForm) loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = new FormData(loginForm);
-      const { error } = await client.auth.signInWithPassword({ email: form.get("email"), password: form.get("password") });
-      if (error) { message(authMessage("loginError", "登录失败：", error.message)); return; }
-      location.href = new URLSearchParams(location.search).get("next") === "/" ? "/?from=auth" : "community.html";
+      const email = String(form.get("email") || "").trim();
+      const { error } = await client.auth.signInWithPassword({ email, password: form.get("password") });
+      if (error) { message(authError("loginError", "登录失败：", error)); return; }
+      const next = params.get("next");
+      location.href = next && next.startsWith("/") ? next : "community.html";
     });
-    registerForm.addEventListener("submit", async (event) => {
+    if (registerForm) registerForm.addEventListener("submit", async (event) => {
       event.preventDefault();
       const form = new FormData(registerForm);
       if (form.get("password") !== form.get("confirm_password")) { message(authMessage("passwordMismatch", "两次输入的密码不一致。")); return; }
-      const redirectTo = window.location.protocol === "file:"
-        ? "https://x-art-lab.pages.dev/auth"
-        : new URL("auth", window.location.origin).href;
       const { data, error } = await client.auth.signUp({
         email: String(form.get("email") || "").trim(),
         password: form.get("password"),
-        options: { data: { display_name: form.get("display_name") }, emailRedirectTo: redirectTo }
+        options: { data: { display_name: form.get("display_name") }, emailRedirectTo: publicAuthUrl() }
       });
-      if (error) { message(authMessage("registerError", "注册失败：", error.message)); return; }
+      if (error) { message(authError("registerError", "注册失败：", error)); return; }
       message(data.session ? authMessage("registerSuccess", "注册成功，正在进入文库。") : authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。"), "success");
-      if (data.session) setTimeout(() => { location.href = new URLSearchParams(location.search).get("next") === "/" ? "/?from=auth" : "community.html"; }, 700);
+      if (data.session) setTimeout(() => { location.href = "community.html"; }, 700);
+    });
+    if (recoveryForm) recoveryForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(recoveryForm);
+      const email = String(form.get("email") || "").trim();
+      const { error } = await client.auth.resetPasswordForEmail(email, { redirectTo: passwordResetUrl() });
+      if (error) { message(authError("recoveryError", "发送重置邮件失败：", error)); return; }
+      message(authMessage("recoveryCheck", "重置密码邮件已发送，请检查邮箱。"), "success");
+    });
+    if (updatePasswordForm) updatePasswordForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const form = new FormData(updatePasswordForm);
+      const password = String(form.get("password") || "");
+      if (password !== form.get("confirm_password")) { message(authMessage("passwordMismatch", "两次输入的密码不一致。")); return; }
+      const { error } = await client.auth.updateUser({ password });
+      if (error) { message(authError("updatePasswordError", "密码更新失败：", error)); return; }
+      message(authMessage("updatePasswordSuccess", "密码已更新，请使用新密码登录。"), "success");
+      setTimeout(() => { location.href = "auth.html"; }, 900);
     });
   }
 
   async function uploadCover(user, file) {
     if (!file) return null;
     const safeName = file.name.toLowerCase().replace(/[^a-z0-9._-]+/g, "-");
-    const path = `${user.id}/${crypto.randomUUID()}-${safeName}`;
+    const path = user.id + "/" + crypto.randomUUID() + "-" + safeName;
     const { error } = await client.storage.from("article-media").upload(path, file, { upsert: false, contentType: file.type || undefined });
     if (error) throw error;
     return client.storage.from("article-media").getPublicUrl(path).data.publicUrl;
@@ -185,7 +235,7 @@
         existing = result.data;
         message(submitter === "pending" ? "文章已提交审核。" : "草稿已保存。", "success");
         setTimeout(() => { location.href = "community.html"; }, 700);
-      } catch (error) { message(`保存失败：${error.message}`); }
+      } catch (error) { message("保存失败：" + error.message); }
     });
   }
 
@@ -198,7 +248,7 @@
     $("[data-article-title]").textContent = data.title;
     $("[data-article-excerpt]").textContent = data.excerpt || "";
     $("[data-article-content]").textContent = data.content || "";
-    $("[data-article-meta]").textContent = `X Art Lab 文库 / ${data.locale || "zh"} / ${data.profiles?.display_name || "X Art Lab Contributor"}`;
+    $("[data-article-meta]").textContent = "X Art Lab 文库 / " + (data.locale || "zh") + " / " + (data.profiles?.display_name || "X Art Lab Contributor");
     if (data.cover_url) { const image = $("[data-article-cover]"); image.src = data.cover_url; image.alt = data.title; image.classList.remove("hidden"); }
   }
 
@@ -210,14 +260,14 @@
     const profile = await client.from("profiles").select("role").eq("id", user.id).single();
     if (!profile.data || !["admin", "editor"].includes(profile.data.role)) { message("这个页面只对编辑和管理员开放。"); return; }
     const { data, error } = await client.from("articles").select("id,title,excerpt,locale,created_at,profiles(display_name)").eq("status", "pending").order("created_at", { ascending: true });
-    if (error) { message(`加载待审核文章失败：${error.message}`); return; }
+    if (error) { message("加载待审核文章失败：" + error.message); return; }
     const list = $("[data-moderation]");
-    list.innerHTML = data?.length ? data.map((article) => `<article class="moderation-row"><div><h3>${escapeHtml(article.title)}</h3><p>${escapeHtml(article.locale)} / ${escapeHtml(article.profiles?.display_name || "Contributor")}<br>${escapeHtml(article.excerpt || "")}</p></div><div class="moderation-actions"><a class="button-secondary" href="article.html?id=${encodeURIComponent(article.id)}">查看</a><button class="button-primary" data-review="published" data-id="${article.id}">发布</button><button class="button-danger" data-review="rejected" data-id="${article.id}">退回</button></div></article>`).join("") : '<div class="community-empty">目前没有待审核文章。</div>';
-    $$("[data-review]").forEach((button) => button.addEventListener("click", async () => {
+    list.innerHTML = data?.length ? data.map((article) => '<article class="moderation-row"><div><h3>' + escapeHtml(article.title) + '</h3><p>' + escapeHtml(article.locale) + ' / ' + escapeHtml(article.profiles?.display_name || "Contributor") + '<br>' + escapeHtml(article.excerpt || "") + '</p></div><div class="moderation-actions"><a class="button-secondary" href="article.html?id=' + encodeURIComponent(article.id) + '">查看</a><button class="button-primary" data-review="published" data-id="' + article.id + '">发布</button><button class="button-danger" data-review="rejected" data-id="' + article.id + '">退回</button></div></article>').join("") : '<div class="community-empty">目前没有待审核文章。</div>';
+    $$('[data-review]').forEach((button) => button.addEventListener("click", async () => {
       const status = button.dataset.review;
       const update = { status, published_at: status === "published" ? new Date().toISOString() : null, review_note: status === "rejected" ? "请根据编辑意见修改后重新提交。" : null };
       const result = await client.from("articles").update(update).eq("id", button.dataset.id);
-      if (result.error) { message(`操作失败：${result.error.message}`); return; }
+      if (result.error) { message("操作失败：" + result.error.message); return; }
       await loadModeration();
     }));
   }
