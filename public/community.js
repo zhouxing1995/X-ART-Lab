@@ -81,24 +81,30 @@
     };
     const loginForm = $("#login-form");
     const registerForm = $("#register-form");
-    const phoneForm = $("#phone-form");
-    const phoneCodeRow = $("[data-phone-code-row]");
-    const phoneSend = $("[data-phone-action=send]");
-    const phoneVerify = $("[data-phone-action=verify]");
-    let phoneCodeSent = false;
+    $$('[data-password-toggle]').forEach((button) => {
+      const input = document.getElementById(button.dataset.passwordToggle);
+      if (!input) return;
+      const updateToggleLabel = () => {
+        const visible = input.type === "text";
+        const key = visible ? "hidePassword" : "showPassword";
+        const fallback = visible ? "隐藏密码" : "显示密码";
+        const label = authMessage(key, fallback);
+        button.classList.toggle("is-visible", visible);
+        button.setAttribute("aria-pressed", String(visible));
+        button.setAttribute("aria-label", label);
+        button.title = label;
+      };
+      button.addEventListener("click", () => {
+        input.type = input.type === "password" ? "text" : "password";
+        updateToggleLabel();
+      });
+      updateToggleLabel();
+    });
     $$("[data-auth-mode]").forEach((button) => button.addEventListener("click", () => {
       $$("[data-auth-mode]").forEach((item) => item.classList.toggle("active", item === button));
       loginForm.classList.toggle("hidden", button.dataset.authMode !== "login");
       registerForm.classList.toggle("hidden", button.dataset.authMode !== "register");
-      phoneForm.classList.toggle("hidden", button.dataset.authMode === "register");
       message("");
-    }));
-    $$(`[data-oauth]`).forEach((button) => button.addEventListener("click", async () => {
-      const redirectTo = window.location.protocol === "file:"
-        ? "https://x-art-lab.pages.dev/community.html"
-        : new URL("community.html", window.location.href).href;
-      const { error } = await client.auth.signInWithOAuth({ provider: button.dataset.oauth, options: { redirectTo } });
-      if (error) message(authMessage("oauthError", "第三方登录失败：", error.message));
     }));
     loginForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -111,29 +117,17 @@
       event.preventDefault();
       const form = new FormData(registerForm);
       if (form.get("password") !== form.get("confirm_password")) { message(authMessage("passwordMismatch", "两次输入的密码不一致。")); return; }
-      const { data, error } = await client.auth.signUp({ email: form.get("email"), password: form.get("password"), options: { data: { display_name: form.get("display_name") } } });
+      const redirectTo = window.location.protocol === "file:"
+        ? "https://x-art-lab.pages.dev/auth"
+        : new URL("auth", window.location.origin).href;
+      const { data, error } = await client.auth.signUp({
+        email: String(form.get("email") || "").trim(),
+        password: form.get("password"),
+        options: { data: { display_name: form.get("display_name") }, emailRedirectTo: redirectTo }
+      });
       if (error) { message(authMessage("registerError", "注册失败：", error.message)); return; }
       message(data.session ? authMessage("registerSuccess", "注册成功，正在进入文库。") : authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。"), "success");
       if (data.session) setTimeout(() => { location.href = "community.html"; }, 700);
-    });
-    phoneForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const form = new FormData(phoneForm);
-      const phone = String(form.get("phone") || "").trim();
-      if (!phoneCodeSent) {
-        const { error } = await client.auth.signInWithOtp({ phone, options: { channel: "sms" } });
-        if (error) { message(authMessage("sendError", "发送验证码失败：", error.message)); return; }
-        phoneCodeSent = true;
-        phoneCodeRow.classList.remove("hidden");
-        phoneSend.classList.add("hidden");
-        phoneVerify.classList.remove("hidden");
-        message(authMessage("codeSent", "验证码已发送，请检查短信。"), "success");
-        return;
-      }
-      const token = String(form.get("token") || "").trim();
-      const { error } = await client.auth.verifyOtp({ phone, token, type: "sms" });
-      if (error) { message(authMessage("verifyError", "验证码登录失败：", error.message)); return; }
-      location.href = "community.html";
     });
   }
 
