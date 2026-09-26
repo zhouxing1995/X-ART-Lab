@@ -282,7 +282,7 @@ const responsiveStyles=`
 export default function App(){
   if(location.pathname.startsWith("/admin"))return <Admin/>;
   const[tab,setTab]=useState("discover"),[open,setOpen]=useState(null),[subscribed,setSubscribed]=useState(false),[items,setItems]=useState(fallbackItems),[lang,setLang]=useState(()=>localStorage.getItem("xart-language")||"zh"),[showSplash,setShowSplash]=useState(true);
-  useEffect(()=>{const timer=setTimeout(()=>setShowSplash(false),4600);return()=>clearTimeout(timer)},[]);
+  useEffect(()=>{const timer=setTimeout(()=>{setShowSplash(false);if(new URLSearchParams(location.search).get("from")!=="auth"){location.replace("/auth?next=/")}else{history.replaceState({},"","/")}},4600);return()=>clearTimeout(timer)},[]);
   useEffect(()=>{localStorage.setItem("xart-language",lang);document.documentElement.lang=lang==="zh"?"zh-CN":lang},[lang]);
   useEffect(()=>{
     let active=true;
