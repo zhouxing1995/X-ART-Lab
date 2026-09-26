@@ -1,16 +1,27 @@
 <!doctype html>
 <html lang="zh-CN">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>X Art Lab 文库 / 登录</title><link rel="stylesheet" href="community.css"></head>
-<body class="community-body" data-page="auth">
-  <div class="community-shell"><header class="community-header"><a class="community-brand" href="index.html"><img src="x-art-lab-logo-tight.png" alt="X-ART Lab."></a><nav class="community-nav"><a href="community.html">X Art Lab 文库</a><a href="index.html">研究资料</a></nav><div class="community-account"><a href="community.html">返回文库</a></div></header>
-    <main class="community-main"><div class="community-form-shell"><section class="community-form-card"><p class="community-kicker">X-ART LAB. / ACCOUNT</p><h1>进入文库。</h1><p>使用邮箱、手机号或第三方账号登录，也可以注册一个投稿账号。文章提交后会进入编辑审核。</p><div class="auth-tabs"><button class="auth-tab active" data-auth-mode="login">登录</button><button class="auth-tab" data-auth-mode="register">注册</button></div><div data-message></div>
-      <div class="auth-provider-grid"><button class="button-secondary" type="button" data-oauth="google">使用 Google 登录</button><button class="button-secondary" type="button" data-oauth="github">使用 GitHub 登录</button></div>
-      <div class="auth-divider"><span>或使用邮箱</span></div>
+<body class="community-body auth-page" data-page="auth">
+  <div class="community-shell"><header class="community-header"><a class="community-brand" href="index.html"><img src="x-art-lab-logo-tight.png" alt="X-ART Lab."></a><nav class="community-nav"><a href="community.html">X Art Lab 文库</a><a href="index.html">研究资料</a></nav><div class="community-account"><span class="auth-status"><i></i>安全登录</span><a href="community.html">返回文库</a></div></header>
+    <main class="auth-main"><div class="community-form-shell auth-shell"><section class="community-form-card auth-card"><div class="auth-card-meta"><span>ACCOUNT / 01</span><span>SECURE ACCESS</span></div><p class="community-kicker">X-ART LAB. / LIBRARY</p><h1>进入文库。</h1><p>使用邮箱、手机号或第三方账号登录，也可以注册一个投稿账号。文章提交后会进入编辑审核。</p><div class="auth-tabs"><button class="auth-tab active" data-auth-mode="login">登录</button><button class="auth-tab" data-auth-mode="register">注册</button></div><div data-message></div>
+      <div class="auth-provider-grid"><button class="button-secondary auth-provider" type="button" data-oauth="google"><span class="provider-icon">G</span><span>Google</span></button><button class="button-secondary auth-provider" type="button" data-oauth="github"><span class="provider-icon">⌘</span><span>GitHub</span></button></div>
+      <div class="auth-divider"><span>邮箱登录</span></div>
       <form id="login-form"><div class="form-row"><label>邮箱</label><input name="email" type="email" autocomplete="email" required></div><div class="form-row"><label>密码</label><input name="password" type="password" autocomplete="current-password" required></div><div class="form-actions"><button class="button-primary" type="submit">登录</button></div></form>
       <div class="auth-divider"><span>或使用手机号验证码</span></div>
-      <form id="phone-form"><div class="form-row"><label>手机号（含国家区号）</label><input name="phone" type="tel" autocomplete="tel" placeholder="例如：+86 13800000000" required></div><div class="form-row hidden" data-phone-code-row><label>短信验证码</label><input name="token" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6"></div><div class="form-actions"><button class="button-secondary" type="submit" data-phone-action="send">发送验证码</button><button class="button-primary hidden" type="submit" data-phone-action="verify">验证并登录</button></div></form>
-      <p class="auth-note">手机号、Google 和 GitHub 登录需要在 Supabase 身份验证设置中启用对应服务。</p>
+      <form id="phone-form"><div class="form-row"><label>国家/地区 + 手机号</label><div class="phone-input-group"><select name="country_code" aria-label="国家/地区区号"><option value="+86">+86 中国大陆</option><option value="+33">+33 法国</option><option value="+1">+1 美国 / 加拿大</option><option value="+44">+44 英国</option><option value="+81">+81 日本</option><option value="+82">+82 韩国</option><option value="+49">+49 德国</option><option value="+39">+39 意大利</option><option value="+34">+34 西班牙</option><option value="+61">+61 澳大利亚</option><option value="+7">+7 俄罗斯 / 哈萨克斯坦</option><option value="+91">+91 印度</option><option value="+55">+55 巴西</option><option value="+971">+971 阿联酋</option><option value="+65">+65 新加坡</option><option value="+852">+852 中国香港</option><option value="+853">+853 中国澳门</option><option value="+886">+886 中国台湾</option></select><input name="phone" type="tel" autocomplete="tel" placeholder="请输入手机号，不含国家区号" required></div></div><div class="form-row hidden" data-phone-code-row><label>短信验证码</label><input name="token" inputmode="numeric" autocomplete="one-time-code" minlength="6" maxlength="6"></div><div class="form-actions"><button class="button-secondary" type="submit" data-phone-action="send">发送验证码</button><button class="button-primary hidden" type="submit" data-phone-action="verify">验证并登录</button></div></form>
+      <p class="auth-note">手机号登录支持多种国家/地区区号；Google、GitHub 登录需要在对应平台完成身份验证配置。账号只用于 X Art Lab. 文库和投稿。</p>
       <form id="register-form" class="hidden"><div class="form-row"><label>显示名称</label><input name="display_name" type="text" maxlength="60" required></div><div class="form-row"><label>邮箱</label><input name="email" type="email" autocomplete="email" required></div><div class="form-row"><label>密码（至少 8 位）</label><input name="password" type="password" minlength="8" autocomplete="new-password" required></div><div class="form-row"><label>确认密码</label><input name="confirm_password" type="password" minlength="8" autocomplete="new-password" required></div><div class="form-actions"><button class="button-primary" type="submit">创建账号</button></div></form>
-    </section></div></main><footer class="community-footer">账号只用于 X-ART Lab. 文库登录和投稿。</footer></div>
+    </section></div></main><footer class="community-footer">X ART LAB. / RESEARCH LIBRARY <span>2026</span></footer></div>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js"></script><script src="community.js"></script>
+  <script>
+    (() => {
+      const form = document.querySelector("#phone-form");
+      const country = document.querySelector("#phone-form [name=country_code]");
+      const phone = document.querySelector("#phone-form [name=phone]");
+      if (!form || !country || !phone) return;
+      form.addEventListener("submit", () => {
+        phone.value = (country.value + " " + phone.value.replace(/^\+\d+[\s-]*/, "").trim()).trim();
+      }, true);
+    })();
+  </script>
 </body></html>
