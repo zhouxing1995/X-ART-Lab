@@ -79,6 +79,7 @@
   }
 
   async function loadAuth() {
+    window.__XART_AUTH_RUNTIME_V2 = true;
     if (!setupGuard()) return;
     const authMessage = (key, fallback, detail = "") => {
       const translate = window.XART_AUTH_TRANSLATE;
