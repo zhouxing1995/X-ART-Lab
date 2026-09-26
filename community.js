@@ -131,7 +131,7 @@
       });
       if (error) { message(authMessage("registerError", "注册失败：", error.message)); return; }
       message(data.session ? authMessage("registerSuccess", "注册成功，正在进入文库。") : authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。"), "success");
-      if (data.session) setTimeout(() => { location.href = "community.html"; }, 700);
+      if (data.session) setTimeout(() => { location.href = new URLSearchParams(location.search).get("next") === "/" ? "/?from=auth" : "community.html"; }, 700);
     });
   }
 
