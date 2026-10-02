@@ -46,11 +46,11 @@
   const message = (text, tone = "") => document.querySelectorAll("[data-message]").forEach((node) => { node.textContent = text; node.hidden = !text; node.className = text ? "auth-message " + tone : "hidden"; });
   const text = (key, fallback, detail = "") => typeof window.XART_AUTH_TRANSLATE === "function" ? window.XART_AUTH_TRANSLATE(key, detail) : fallback + detail;
   const showMode = (mode) => {
-    Object.keys(forms).forEach((key) => { if (forms[key]) forms[key].classList.toggle("hidden", key !== mode); });
+    Object.keys(forms).forEach((key) => { const form = forms[key]; if (!form) return; const shouldShow = key === mode; form.classList.toggle("hidden", !shouldShow); form.hidden = !shouldShow; form.style.display = shouldShow ? "" : "none"; });
     document.querySelectorAll("[data-auth-mode]").forEach((button) => button.classList.toggle("active", button.dataset.authMode === mode));
     message("");
   };
-  document.querySelectorAll("[data-auth-action]").forEach((button) => button.addEventListener("click", () => showMode(button.dataset.authAction)));
+  document.querySelectorAll("[data-auth-mode]").forEach((button) => button.addEventListener("click", () => showMode(button.dataset.authMode))); document.querySelectorAll("[data-auth-action]").forEach((button) => button.addEventListener("click", () => showMode(button.dataset.authAction)));
   const params = new URLSearchParams(location.search);
   showMode(params.get("mode") === "update-password" || location.hash.includes("type=recovery") ? "update" : "login");
   const config = window.XART_SUPABASE || {};
