@@ -104,7 +104,7 @@
     const showAuthMode = (mode) => {
       forms.forEach((form) => {
         const shouldShow = (mode === "update" && form === updatePasswordForm) || form.id === mode + "-form";
-        form.classList.toggle("hidden", !shouldShow);
+        form.classList.toggle("hidden", !shouldShow); form.hidden = !shouldShow; form.style.display = shouldShow ? "" : "none";
       });
       $$('[data-auth-mode]').forEach((item) => item.classList.toggle("active", item.dataset.authMode === mode));
       message("");
