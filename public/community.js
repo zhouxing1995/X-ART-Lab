@@ -121,16 +121,16 @@
       event.preventDefault();
       const form = new FormData(registerForm);
       if (form.get("password") !== form.get("confirm_password")) { message(authMessage("passwordMismatch", "两次输入的密码不一致。")); return; }
-      const redirectTo = window.location.protocol === "file:"
+      const email = String(form.get("email") || "").trim(); const redirectTo = window.location.protocol === "file:"
         ? "https://x-art-lab.pages.dev/auth"
         : new URL("auth", window.location.origin).href;
       const { data, error } = await client.auth.signUp({
-        email: String(form.get("email") || "").trim(),
+        email,
         password: form.get("password"),
         options: { data: { display_name: form.get("display_name") }, emailRedirectTo: redirectTo }
       });
       if (error) { message(authMessage("registerError", "注册失败：", error.message)); return; }
-      message(data.session ? authMessage("registerSuccess", "注册成功，正在进入文库。") : authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。"), "success");
+      const awaitingConfirmation = Boolean(!data.session && data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0); if (awaitingConfirmation) { const { error: resendError } = await client.auth.resend({ type: "signup", email, options: { emailRedirectTo: redirectTo } }); const resendDetail = resendError ? " 如仍未收到，请检查邮箱地址、垃圾邮件或稍后重试。" : " 确认邮件已重新发送，请检查收件箱和垃圾邮件。"; message(authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。", resendDetail), "success"); return; } message(data.session ? authMessage("registerSuccess", "注册成功，正在进入文库。") : authMessage("registerCheck", "注册成功。请查收验证邮件，再返回登录。"), "success");
       if (data.session) setTimeout(() => { location.href = "community.html"; }, 700);
     });
   }
