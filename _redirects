@@ -1,2 +1,3 @@
-/auth /auth.html 200
-/auth/ /auth.html 200
+/auth /login.html 200
+/auth/ /login.html 200
+/auth.html /login.html 302
