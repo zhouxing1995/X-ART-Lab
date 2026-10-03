@@ -36,7 +36,7 @@
   const $ = (s) => document.querySelector(s);
   const params = new URLSearchParams(location.search);
   const requestedNext = params.get('next');
-  const safeNext = requestedNext && requestedNext[0] === '/' && requestedNext[1] !== '/' ? requestedNext : '/community.html';
+  const safeNext = requestedNext && requestedNext[0] === '/' && requestedNext[1] !== '/' ? requestedNext : '/';
   const config = window.XART_SUPABASE || {};
   const client = window.supabase && config.url && config.anonKey ? window.supabase.createClient(config.url, config.anonKey) : null;
   const forms = { login: $('#login-form'), register: $('#register-form'), otp: $('#signup-otp-form'), recovery: $('#recovery-form'), update: $('#update-password-form') };
@@ -46,7 +46,7 @@
   const setBusy = (form, busy, label) => { const button = form && form.querySelector('button[type="submit"]'); if (!button) return; if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent; button.disabled = busy; button.textContent = busy ? label : button.dataset.idleLabel; };
   const wait = (promise, ms) => Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('REQUEST_TIMEOUT')), ms))]);
   const errorText = (error, action) => { const raw = String(error && (error.message || error) || ''); const lower = raw.toLowerCase(); if (raw === 'REQUEST_TIMEOUT') return '请求超时，请稍后重试。'; if (lower.includes('invalid login credentials')) return '邮箱或密码不正确。'; if (lower.includes('email not confirmed')) return '邮箱还没有确认，请先填写验证码。'; if (lower.includes('already registered') || lower.includes('user already')) return '该邮箱已经注册，请直接登录或使用“忘记密码”。'; if (lower.includes('password') && (lower.includes('least') || lower.includes('characters') || lower.includes('weak'))) return '密码至少需要 8 位。'; if (lower.includes('rate limit')) return '邮件发送过于频繁，请稍后再试。'; if (lower.includes('sending confirmation') || lower.includes('error sending')) return '验证邮件发送失败，请检查 Supabase SMTP 设置。'; return action + '失败：' + raw; };
-  const goNext = async () => { const target = safeNext === '/' ? '/?from=auth' : safeNext; if (client) { try { await client.auth.getSession(); } catch (_) {} } location.replace(target); };
+  const goNext = async () => { const target = safeNext === '/' ? '/?from=auth' : safeNext; if (client) { try { await client.auth.getSession(); } catch (_) {} } localStorage.setItem('xart-auth-complete', '1'); location.replace(target); };
   document.querySelectorAll('[data-auth-mode]').forEach((button) => button.addEventListener('click', () => showMode(button.dataset.authMode), true));
   document.querySelectorAll('[data-auth-action]').forEach((button) => button.addEventListener('click', () => showMode(button.dataset.authAction), true));
   showMode(params.get('mode') === 'update-password' ? 'update' : 'login');
