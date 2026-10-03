@@ -10,6 +10,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("/service-worker.js?v=9", { updateViaCache: "none" }).then((registration) => registration.update()).catch(() => {});
+    navigator.serviceWorker.register("/service-worker.js?v=10", { updateViaCache: "none" }).then((registration) => registration.update()).catch(() => {});
   });
 }
