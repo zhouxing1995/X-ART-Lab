@@ -16,7 +16,7 @@
 </head>
 <body class="community-body auth-page" data-page="auth">
 <div class="community-shell">
-<header class="community-header"><a class="community-brand" href="index.html">X-ART Lab.</a><nav class="community-nav"><a href="community.html">X Art Lab 文库</a><a href="index.html">研究资料</a></nav><div class="community-account"><span>安全登录</span><a href="community.html">返回文库</a></div></header>
+<header class="community-header"><a class="community-brand" href="index.html"><img src="assets/x-art-lab-logo-tight-B909iGyM.png" alt="X-ART Lab."></a><nav class="community-nav"><a href="community.html">X Art Lab 文库</a><a href="index.html">研究资料</a></nav><div class="language-switcher" role="group" aria-label="Language"><button class="active" type="button" data-language="zh" aria-pressed="true">中文</button><button type="button" data-language="fr" aria-pressed="false">FR</button><button type="button" data-language="en" aria-pressed="false">EN</button></div><div class="community-account"><span>安全登录</span><a href="community.html">返回文库</a></div></header>
 <main class="auth-main"><div class="community-form-shell auth-shell"><section class="community-form-card auth-card">
 <p class="community-kicker">X-ART LAB. / 文库</p><h1>进入文库。</h1><p>使用邮箱登录，或注册一个投稿账号。注册后请填写邮件中的验证码。</p>
 <div class="auth-tabs"><button class="auth-tab active" type="button" data-auth-mode="login">登录</button><button class="auth-tab" type="button" data-auth-mode="register">注册</button></div>
@@ -46,10 +46,14 @@
   const setBusy = (form, busy, label) => { const button = form && form.querySelector('button[type="submit"]'); if (!button) return; if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent; button.disabled = busy; button.textContent = busy ? label : button.dataset.idleLabel; };
   const wait = (promise, ms) => Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('REQUEST_TIMEOUT')), ms))]);
   const errorText = (error, action) => { const raw = String(error && (error.message || error) || ''); const lower = raw.toLowerCase(); if (raw === 'REQUEST_TIMEOUT') return '请求超时，请稍后重试。'; if (lower.includes('invalid login credentials')) return '邮箱或密码不正确。'; if (lower.includes('email not confirmed')) return '邮箱还没有确认，请先填写验证码。'; if (lower.includes('already registered') || lower.includes('user already')) return '该邮箱已经注册，请直接登录或使用“忘记密码”。'; if (lower.includes('password') && (lower.includes('least') || lower.includes('characters') || lower.includes('weak'))) return '密码至少需要 8 位。'; if (lower.includes('rate limit')) return '邮件发送过于频繁，请稍后再试。'; if (lower.includes('sending confirmation') || lower.includes('error sending')) return '验证邮件发送失败，请检查 Supabase SMTP 设置。'; return action + '失败：' + raw; };
-  const goNext = () => { location.href = safeNext; };
+  const goNext = async () => { const target = safeNext === '/' ? '/?from=auth' : safeNext; if (client) { try { await client.auth.getSession(); } catch (_) {} } location.replace(target); };
   document.querySelectorAll('[data-auth-mode]').forEach((button) => button.addEventListener('click', () => showMode(button.dataset.authMode), true));
   document.querySelectorAll('[data-auth-action]').forEach((button) => button.addEventListener('click', () => showMode(button.dataset.authAction), true));
   showMode(params.get('mode') === 'update-password' ? 'update' : 'login');
+  const languageButtons = [...document.querySelectorAll('[data-language]')];
+  const applyLanguage = (language) => { localStorage.setItem('xart-language', language); document.documentElement.lang = language === 'zh' ? 'zh-CN' : language; languageButtons.forEach((button) => { const active = button.dataset.language === language; button.classList.toggle('active', active); button.setAttribute('aria-pressed', String(active)); }); };
+  languageButtons.forEach((button) => button.addEventListener('click', () => applyLanguage(button.dataset.language), true));
+  applyLanguage(localStorage.getItem('xart-language') || 'zh');
   let registerBusy = false;
   forms.register.addEventListener('submit', async (event) => {
     event.preventDefault(); event.stopImmediatePropagation();
