@@ -1,70 +1,76 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>X Art Lab 文库 / 登录</title><link rel="stylesheet" href="community.css"></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X Art Lab 文库 / 登录</title>
+<link rel="stylesheet" href="community.css">
+</head>
 <body class="community-body auth-page" data-page="auth">
 <div class="community-shell">
-<header class="community-header"><a class="community-brand" href="index.html"><img src="x-art-lab-logo-tight.png" alt="X-ART Lab."></a><nav class="community-nav"><a href="community.html">X Art Lab 文库</a><a href="index.html">研究资料</a></nav><div class="language-switcher" role="group" aria-label="语言"><button class="active" type="button" data-language="zh">中</button><button type="button" data-language="en">EN</button><button type="button" data-language="fr">FR</button></div><div class="community-account"><span class="auth-status"><i></i><span>安全登录</span></span><a href="community.html">返回文库</a></div></header>
+<header class="community-header"><a class="community-brand" href="index.html">X-ART Lab.</a><nav class="community-nav"><a href="community.html">X Art Lab 文库</a><a href="index.html">研究资料</a></nav><div class="community-account"><span>安全登录</span><a href="community.html">返回文库</a></div></header>
 <main class="auth-main"><div class="community-form-shell auth-shell"><section class="community-form-card auth-card">
-<div class="auth-card-meta"><span>账户 / 01</span><span>安全访问</span></div><p class="community-kicker">X-ART LAB. / 文库</p><h1>进入文库。</h1><p>使用邮箱登录，或注册一个投稿账号。文章提交后会进入编辑审核。</p>
-<div class="auth-tabs"><button class="auth-tab active" type="button" data-auth-mode="login">登录</button><button class="auth-tab" type="button" data-auth-mode="register">注册</button></div><div class="auth-divider"><span>邮箱登录</span></div>
-<form id="login-form"><div class="form-row"><label for="login-email">邮箱</label><input id="login-email" name="email" type="email" autocomplete="email" placeholder="请输入邮箱" required></div><div class="form-row"><label for="login-password">密码</label><div class="password-input-wrap"><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" required><button class="password-toggle" type="button" data-password-toggle="login-password" aria-label="显示密码" title="显示密码">显示</button></div></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">登录</button><button class="auth-forgot-link" type="button" data-recovery-open data-auth-action="recovery">忘记密码？</button></div><div class="auth-message hidden" data-message aria-live="polite"></div></form>
-<form id="register-form" class="hidden"><div class="form-row"><label for="register-display-name">显示名称</label><input id="register-display-name" name="display_name" type="text" maxlength="60" placeholder="请输入显示名称" required></div><div class="form-row"><label for="register-email">邮箱</label><input id="register-email" name="email" type="email" autocomplete="email" placeholder="请输入邮箱" required></div><div class="form-row"><label for="register-password">密码（至少 8 位）</label><div class="password-input-wrap"><input id="register-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="请输入密码" required><button class="password-toggle" type="button" data-password-toggle="register-password" aria-label="显示密码" title="显示密码">显示</button></div></div><div class="form-row"><label for="register-confirm-password">确认密码</label><div class="password-input-wrap"><input id="register-confirm-password" name="confirm_password" type="password" minlength="8" autocomplete="new-password" placeholder="请再次输入密码" required><button class="password-toggle" type="button" data-password-toggle="register-confirm-password" aria-label="显示密码" title="显示密码">显示</button></div></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">创建账号</button></div><div class="auth-message hidden" data-message aria-live="polite"></div></form>
-<form id="signup-otp-form" class="hidden"><div class="auth-flow-heading"><span class="auth-flow-step">邮箱验证</span><h2>输入验证码</h2><p>我们已向你的邮箱发送 6 位验证码，请输入验证码完成注册。</p></div><div class="form-row"><label for="signup-otp-email">邮箱</label><input id="signup-otp-email" name="email" type="email" autocomplete="email" placeholder="请输入邮箱" required></div><div class="form-row"><label for="signup-otp-token">验证码</label><input id="signup-otp-token" name="token" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,8}" maxlength="8" placeholder="请输入邮件中的验证码" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">确认邮箱</button><div class="auth-message hidden" data-message aria-live="polite"></div></div><div class="auth-secondary-actions"><button class="auth-link" type="button" data-auth-resend>重新发送验证码</button><button class="auth-link" type="button" data-auth-action="login">返回登录</button></div></form>
-<form id="recovery-form" class="hidden"><div class="auth-flow-heading"><span class="auth-flow-step">账户恢复</span><h2>重置密码</h2><p>输入注册邮箱，我们会发送一封安全的重置邮件。</p></div><div class="form-row"><label for="recovery-email">邮箱</label><input id="recovery-email" name="email" type="email" autocomplete="email" placeholder="请输入邮箱" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">发送重置邮件</button><div class="auth-message hidden" data-message aria-live="polite"></div></div><button class="auth-link" type="button" data-auth-back>返回登录</button></form>
-<form id="update-password-form" class="hidden"><div class="auth-flow-heading"><span class="auth-flow-step">账户恢复</span><h2>设置新密码</h2><p>请设置一个至少 8 位的新密码。</p></div><div class="form-row"><label for="new-password">新密码（至少 8 位）</label><div class="password-input-wrap"><input id="new-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="请输入新密码" required><button class="password-toggle" type="button" data-password-toggle="new-password" aria-label="显示密码" title="显示密码">显示</button></div></div><div class="form-row"><label for="confirm-new-password">确认密码</label><div class="password-input-wrap"><input id="confirm-new-password" name="confirm_password" type="password" minlength="8" autocomplete="new-password" placeholder="请再次输入密码" required><button class="password-toggle" type="button" data-password-toggle="confirm-new-password" aria-label="显示密码" title="显示密码">显示</button></div></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">保存新密码</button><div class="auth-message hidden" data-message aria-live="polite"></div></div><button class="auth-link" type="button" data-auth-back>返回登录</button></form>
+<p class="community-kicker">X-ART LAB. / 文库</p><h1>进入文库。</h1><p>使用邮箱登录，或注册一个投稿账号。注册后请填写邮件中的验证码。</p>
+<div class="auth-tabs"><button class="auth-tab active" type="button" data-auth-mode="login">登录</button><button class="auth-tab" type="button" data-auth-mode="register">注册</button></div>
+<form id="login-form"><div class="form-row"><label for="login-email">邮箱</label><input id="login-email" name="email" type="email" autocomplete="email" placeholder="请输入邮箱" required></div><div class="form-row"><label for="login-password">密码</label><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="请输入密码" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">登录</button><button class="auth-forgot-link" type="button" data-auth-action="recovery">忘记密码？</button></div><div class="auth-message hidden" data-message aria-live="polite"></div></form>
+<form id="register-form" class="hidden" hidden novalidate><div class="form-row"><label for="register-display-name">显示名称</label><input id="register-display-name" name="display_name" type="text" maxlength="60" placeholder="请输入显示名称" required></div><div class="form-row"><label for="register-email">邮箱</label><input id="register-email" name="email" type="email" autocomplete="email" placeholder="请输入邮箱" required></div><div class="form-row"><label for="register-password">密码（至少 8 位）</label><input id="register-password" name="password" type="password" minlength="8" autocomplete="new-password" placeholder="请输入密码" required></div><div class="form-row"><label for="register-confirm-password">确认密码</label><input id="register-confirm-password" name="confirm_password" type="password" minlength="8" autocomplete="new-password" placeholder="请再次输入密码" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">创建账号</button></div><div class="auth-message hidden" data-message aria-live="polite"></div></form>
+<form id="signup-otp-form" class="hidden" hidden><div class="auth-flow-heading"><span class="auth-flow-step">邮箱验证</span><h2>输入验证码</h2><p>验证码已发送到你的邮箱，请输入 6 位验证码完成注册。</p></div><div class="form-row"><label for="signup-otp-email">邮箱</label><input id="signup-otp-email" name="email" type="email" readonly required></div><div class="form-row"><label for="signup-otp-token">验证码</label><input id="signup-otp-token" name="token" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="请输入邮件中的验证码" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">确认邮箱</button></div><div class="auth-message hidden" data-message aria-live="polite"></div><div class="auth-secondary-actions"><button class="auth-link" type="button" data-auth-resend>重新发送验证码</button><button class="auth-link" type="button" data-auth-action="login">返回登录</button></div></form>
+<form id="recovery-form" class="hidden" hidden><div class="auth-flow-heading"><span class="auth-flow-step">账户恢复</span><h2>重置密码</h2><p>输入注册邮箱，我们会发送重置邮件。</p></div><div class="form-row"><label for="recovery-email">邮箱</label><input id="recovery-email" name="email" type="email" placeholder="请输入邮箱" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">发送重置邮件</button></div><div class="auth-message hidden" data-message aria-live="polite"></div><button class="auth-link" type="button" data-auth-action="login">返回登录</button></form>
+<form id="update-password-form" class="hidden" hidden novalidate><div class="auth-flow-heading"><span class="auth-flow-step">账户恢复</span><h2>设置新密码</h2></div><div class="form-row"><label for="new-password">新密码</label><input id="new-password" name="password" type="password" minlength="8" required></div><div class="form-row"><label for="confirm-new-password">确认密码</label><input id="confirm-new-password" name="confirm_password" type="password" minlength="8" required></div><div class="auth-form-actions"><button class="button-primary auth-submit" type="submit">保存新密码</button></div><div class="auth-message hidden" data-message aria-live="polite"></div><button class="auth-link" type="button" data-auth-action="login">返回登录</button></form>
 </section></div></main><footer class="community-footer"><span>X ART LAB. / 文库研究</span><span>2026</span></footer></div>
-<script src="supabase-browser.js?v=auth-runtime-20261002-ux4"></script><script src="supabase-config.js?v=auth-runtime-20261002-ux4"></script><script src="community.js?v=auth-runtime-20261002-ux4"></script>
+<script src="supabase-browser.js?v=auth-runtime-20261003-otp3"></script>
+<script src="supabase-config.js?v=auth-runtime-20261003-otp3"></script>
+<script src="community.js?v=auth-runtime-20261003-otp3"></script>
 <script>
-(function(){
+(() => {
+  if (window.__XART_AUTH_OTP_FIX_V5) return;
+  window.__XART_AUTH_OTP_FIX_V5 = true;
   const $ = (s) => document.querySelector(s);
-  const all = (s) => Array.from(document.querySelectorAll(s));
-  const registerForm = $('#register-form');
-  const otpForm = $('#signup-otp-form');
-  const cfg = window.XART_SUPABASE || {};
-  const client = window.supabase && cfg.url && cfg.anonKey ? window.supabase.createClient(cfg.url, cfg.anonKey) : null;
   const params = new URLSearchParams(location.search);
   const requestedNext = params.get('next');
-  const safeNext = requestedNext && requestedNext.startsWith('/') && !requestedNext.startsWith('//') ? requestedNext : 'community.html';
-  const authUrl = () => { const base = location.origin && location.origin !== 'null' ? location.origin : 'https://x-art-lab.pages.dev'; return base + '/auth.html?next=' + encodeURIComponent(safeNext); };
-  const showMessage = (text, tone) => all('[data-message]').forEach((node) => { node.textContent = text || ''; node.dataset.tone = tone || 'info'; node.classList.toggle('hidden', !text); });
-  const showMode = (mode) => {
-    const map = { login: '#login-form', register: '#register-form', 'signup-otp': '#signup-otp-form', recovery: '#recovery-form', update: '#update-password-form' };
-    Object.entries(map).forEach(([name, selector]) => $(selector)?.classList.toggle('hidden', name !== mode));
-    const tabs = $('.auth-tabs'); const divider = $('.auth-divider'); const tabsVisible = mode === 'login' || mode === 'register';
-    tabs?.classList.toggle('hidden', !tabsVisible); divider?.classList.toggle('hidden', !tabsVisible);
-    all('[data-auth-mode]').forEach((button) => button.classList.toggle('active', button.dataset.authMode === mode));
-  };
-  const setBusy = (form, busy) => form?.querySelectorAll('button').forEach((button) => { button.disabled = busy; });
-  if (!client) return;
-  registerForm?.addEventListener('submit', async (event) => {
+  const safeNext = requestedNext && requestedNext[0] === '/' && requestedNext[1] !== '/' ? requestedNext : '/community.html';
+  const config = window.XART_SUPABASE || {};
+  const client = window.supabase && config.url && config.anonKey ? window.supabase.createClient(config.url, config.anonKey) : null;
+  const forms = { login: $('#login-form'), register: $('#register-form'), otp: $('#signup-otp-form'), recovery: $('#recovery-form'), update: $('#update-password-form') };
+  const message = (form, text, tone) => { const node = form && form.querySelector('[data-message]'); if (!node) return; node.textContent = text || ''; node.className = text ? 'auth-message ' + (tone || '') : 'auth-message hidden'; node.hidden = !text; };
+  const clearMessages = () => Object.keys(forms).forEach((key) => message(forms[key], ''));
+  const showMode = (mode) => { Object.keys(forms).forEach((key) => { const form = forms[key]; if (!form) return; const visible = key === mode; form.classList.toggle('hidden', !visible); form.hidden = !visible; form.style.display = visible ? '' : 'none'; }); document.querySelectorAll('[data-auth-mode]').forEach((button) => button.classList.toggle('active', button.dataset.authMode === (mode === 'otp' ? 'register' : mode))); clearMessages(); };
+  const setBusy = (form, busy, label) => { const button = form && form.querySelector('button[type="submit"]'); if (!button) return; if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent; button.disabled = busy; button.textContent = busy ? label : button.dataset.idleLabel; };
+  const wait = (promise, ms) => Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('REQUEST_TIMEOUT')), ms))]);
+  const errorText = (error, action) => { const raw = String(error && (error.message || error) || ''); const lower = raw.toLowerCase(); if (raw === 'REQUEST_TIMEOUT') return '请求超时，请稍后重试。'; if (lower.includes('invalid login credentials')) return '邮箱或密码不正确。'; if (lower.includes('email not confirmed')) return '邮箱还没有确认，请先填写验证码。'; if (lower.includes('already registered') || lower.includes('user already')) return '该邮箱已经注册，请直接登录或使用“忘记密码”。'; if (lower.includes('password') && (lower.includes('least') || lower.includes('characters') || lower.includes('weak'))) return '密码至少需要 8 位。'; if (lower.includes('rate limit')) return '邮件发送过于频繁，请稍后再试。'; if (lower.includes('sending confirmation') || lower.includes('error sending')) return '验证邮件发送失败，请检查 Supabase SMTP 设置。'; return action + '失败：' + raw; };
+  const goNext = () => { location.href = safeNext; };
+  document.querySelectorAll('[data-auth-mode]').forEach((button) => button.addEventListener('click', () => showMode(button.dataset.authMode), true));
+  document.querySelectorAll('[data-auth-action]').forEach((button) => button.addEventListener('click', () => showMode(button.dataset.authAction), true));
+  showMode(params.get('mode') === 'update-password' ? 'update' : 'login');
+  let registerBusy = false;
+  forms.register.addEventListener('submit', async (event) => {
     event.preventDefault(); event.stopImmediatePropagation();
-    const form = new FormData(registerForm); const displayName = String(form.get('display_name') || '').trim(); const email = String(form.get('email') || '').trim().toLowerCase(); const password = String(form.get('password') || ''); const confirm = String(form.get('confirm_password') || '');
-    if (!displayName || !email || password.length < 8 || password !== confirm) { showMessage(password !== confirm ? '两次输入的密码不一致。' : '请完整填写注册信息，密码至少 8 位。', 'error'); return; }
-    setBusy(registerForm, true); showMessage('正在创建账号并发送邮箱验证码…', 'info');
+    if (registerBusy) return;
+    const name = String($('#register-display-name').value || '').trim(); const email = String($('#register-email').value || '').trim().toLowerCase(); const password = String($('#register-password').value || ''); const confirm = String($('#register-confirm-password').value || '');
+    if (!name) return message(forms.register, '请填写显示名称。', 'error');
+    if (!email || !email.includes('@') || !email.includes('.')) return message(forms.register, '请输入有效的邮箱地址。', 'error');
+    if (password.length < 8) return message(forms.register, '密码至少需要 8 位。', 'error');
+    if (password !== confirm) return message(forms.register, '两次输入的密码不一致。', 'error');
+    if (!client) return message(forms.register, '注册失败：认证服务尚未连接。', 'error');
+    registerBusy = true; setBusy(forms.register, true, '发送验证码…'); message(forms.register, '正在发送验证码，请稍候…', 'info');
     try {
-      const result = await client.auth.signUp({ email, password, options: { data: { display_name: displayName }, emailRedirectTo: authUrl() } });
+      const result = await wait(client.auth.signUp({ email, password, options: { data: { display_name: name }, emailRedirectTo: location.origin + '/auth.html?next=' + encodeURIComponent(safeNext) } }), 20000);
       if (result.error) throw result.error;
-      if (result.data?.session) { location.assign(safeNext); return; }
-      const resend = await client.auth.resend({ type: 'signup', email, options: { emailRedirectTo: authUrl() } });
-      if (resend.error && !/already registered|rate limit/i.test(resend.error.message || '')) throw resend.error;
-      $('#signup-otp-email').value = email; showMode('signup-otp'); showMessage('注册成功。验证码已发送，请查收邮件并填写 6 位验证码。', 'success');
-    } catch (error) { showMessage(error?.message || '注册失败，请稍后重试。', 'error'); } finally { setBusy(registerForm, false); }
+      if (!result.data || !result.data.user) throw new Error('注册没有返回用户信息，请稍后重试。');
+      if (result.data.session) return goNext();
+      if (Array.isArray(result.data.user.identities) && result.data.user.identities.length === 0) throw new Error('该邮箱已经注册，请直接登录或使用“忘记密码”。');
+      $('#signup-otp-email').value = email;
+      showMode('otp');
+      message(forms.otp, '验证码已发送，请检查收件箱、垃圾邮件或推广邮件。', 'success');
+      $('#signup-otp-token').focus();
+    } catch (error) { message(forms.register, errorText(error, '注册'), 'error'); } finally { registerBusy = false; setBusy(forms.register, false); }
   }, true);
-  otpForm?.addEventListener('submit', async (event) => {
-    event.preventDefault(); event.stopImmediatePropagation();
-    const form = new FormData(otpForm); const email = String(form.get('email') || '').trim().toLowerCase(); const token = String(form.get('token') || '').trim();
-    if (!email || !/^[0-9]{6,8}$/.test(token)) { showMessage('请输入邮件中的 6 位验证码。', 'error'); return; }
-    setBusy(otpForm, true); showMessage('正在验证邮箱…', 'info');
-    try { const result = await client.auth.verifyOtp({ email, token, type: 'email' }); if (result.error) throw result.error; showMessage('邮箱验证成功，正在进入文库…', 'success'); window.setTimeout(() => location.assign(safeNext), 700); }
-    catch (error) { showMessage(error?.message || '验证码无效或已过期，请重新发送。', 'error'); }
-    finally { setBusy(otpForm, false); }
-  }, true);
-  $('[data-auth-resend]')?.addEventListener('click', async (event) => {
-    event.preventDefault(); const email = String($('#signup-otp-email')?.value || '').trim().toLowerCase(); if (!email) { showMessage('请先填写邮箱。', 'error'); return; }
-    try { const result = await client.auth.resend({ type: 'signup', email, options: { emailRedirectTo: authUrl() } }); if (result.error) throw result.error; showMessage('新的验证码已发送，请检查收件箱和垃圾邮件。', 'success'); }
-    catch (error) { showMessage(error?.message || '验证码发送失败，请稍后再试。', 'error'); }
-  }, true);
-  all('[data-auth-action="login"], [data-auth-back]').forEach((button) => button.addEventListener('click', () => { showMode('login'); showMessage('', 'info'); }, true));
+  forms.otp.addEventListener('submit', async (event) => { event.preventDefault(); event.stopImmediatePropagation(); const email = String($('#signup-otp-email').value || '').trim(); const token = String($('#signup-otp-token').value || '').trim(); if (!/^[0-9]{6,8}$/.test(token)) return message(forms.otp, '请输入 6–8 位数字验证码。', 'error'); if (!client) return message(forms.otp, '验证失败：认证服务尚未连接。', 'error'); setBusy(forms.otp, true, '确认中…'); try { const result = await wait(client.auth.verifyOtp({ email, token, type: 'email' }), 15000); if (result.error) throw result.error; message(forms.otp, '邮箱已确认，正在进入文库…', 'success'); setTimeout(goNext, 500); } catch (error) { message(forms.otp, errorText(error, '验证码确认'), 'error'); } finally { setBusy(forms.otp, false); } }, true);
+  $('[data-auth-resend]').addEventListener('click', async (event) => { event.preventDefault(); event.stopImmediatePropagation(); const email = String($('#signup-otp-email').value || '').trim(); if (!client || !email) return message(forms.otp, '请先填写邮箱。', 'error'); const button = $('[data-auth-resend]'); button.disabled = true; message(forms.otp, '正在重新发送验证码…', 'info'); try { const result = await wait(client.auth.resend({ type: 'signup', email }), 15000); if (result.error) throw result.error; message(forms.otp, '验证码已重新发送。', 'success'); } catch (error) { message(forms.otp, errorText(error, '重新发送'), 'error'); } finally { button.disabled = false; } }, true);
+  forms.login.addEventListener('submit', async (event) => { event.preventDefault(); event.stopImmediatePropagation(); if (!client) return message(forms.login, '登录失败：认证服务尚未连接。', 'error'); const email = String($('#login-email').value || '').trim(); const password = String($('#login-password').value || ''); if (!email || !password) return message(forms.login, '请输入邮箱和密码。', 'error'); setBusy(forms.login, true, '登录中…'); try { const result = await wait(client.auth.signInWithPassword({ email, password }), 15000); if (result.error) throw result.error; goNext(); } catch (error) { message(forms.login, errorText(error, '登录'), 'error'); } finally { setBusy(forms.login, false); } }, true);
+  forms.recovery.addEventListener('submit', async (event) => { event.preventDefault(); event.stopImmediatePropagation(); if (!client) return message(forms.recovery, '发送重置邮件失败：认证服务尚未连接。', 'error'); const email = String($('#recovery-email').value || '').trim(); setBusy(forms.recovery, true, '发送中…'); try { const result = await wait(client.auth.resetPasswordForEmail(email, { redirectTo: location.origin + '/auth.html?mode=update-password' }), 15000); if (result.error) throw result.error; message(forms.recovery, '重置邮件已发送，请检查收件箱或垃圾邮件。', 'success'); } catch (error) { message(forms.recovery, errorText(error, '发送重置邮件'), 'error'); } finally { setBusy(forms.recovery, false); } }, true);
+  forms.update.addEventListener('submit', async (event) => { event.preventDefault(); event.stopImmediatePropagation(); const password = String($('#new-password').value || ''); const confirm = String($('#confirm-new-password').value || ''); if (password.length < 8) return message(forms.update, '密码至少需要 8 位。', 'error'); if (password !== confirm) return message(forms.update, '两次输入的密码不一致。', 'error'); if (!client) return message(forms.update, '密码更新失败：认证服务尚未连接。', 'error'); setBusy(forms.update, true, '保存中…'); try { const result = await wait(client.auth.updateUser({ password }), 15000); if (result.error) throw result.error; message(forms.update, '密码已更新，请使用新密码登录。', 'success'); setTimeout(() => showMode('login'), 900); } catch (error) { message(forms.update, errorText(error, '密码更新'), 'error'); } finally { setBusy(forms.update, false); } }, true);
 })();
 </script>
-</body></html>
+</body>
+</html>
