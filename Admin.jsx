@@ -43,6 +43,17 @@ const blank = {
   en_summary: "",
   en_content: "",
 };
+const blankArchive = {
+  id: null,
+  slug: "",
+  language: "all",
+  published: true,
+  sort_order: 0,
+  cover_image: "",
+  title: "",
+  summary: "",
+  page_url: "",
+};
 const langs = [
   ["zh", "中文"],
   ["fr", "Français"],
@@ -97,6 +108,18 @@ const C = {
     publish: "发布文章",
     saving: "正在保存…",
     required: "请填写标题、摘要和正文。",
+    archives: "艺术家档案",
+    archivesIntro: "独立网页档案，不作为普通文章发布。",
+    addArchive: "新建艺术家档案",
+    archiveEmpty: "还没有艺术家档案",
+    archiveName: "艺术家 / 档案名称",
+    archiveSummary: "简短说明",
+    archiveUrl: "网页链接",
+    archiveUrlHelp: "粘贴已部署的网页地址；前台会以独立网页页面打开。",
+    archiveCover: "档案封面",
+    saveArchive: "保存档案",
+    archiveSaved: "艺术家档案已保存",
+    archiveRequired: "请填写名称和网页链接。",
   },
   fr: {
     admin: "Administration des articles",
@@ -149,6 +172,18 @@ const C = {
     publish: "Publier l’article",
     saving: "Enregistrement…",
     required: "Renseignez le titre, le résumé et le texte.",
+    archives: "Archives d’artistes",
+    archivesIntro: "Pages web indépendantes, séparées des articles.",
+    addArchive: "Nouvelle archive",
+    archiveEmpty: "Aucune archive",
+    archiveName: "Artiste / nom de l’archive",
+    archiveSummary: "Description courte",
+    archiveUrl: "Lien de la page web",
+    archiveUrlHelp: "Collez l’URL publiée de la page. Elle s’ouvre comme une archive web.",
+    archiveCover: "Couverture",
+    saveArchive: "Enregistrer l’archive",
+    archiveSaved: "Archive enregistrée",
+    archiveRequired: "Renseignez le nom et l’URL.",
   },
   en: {
     admin: "Article admin",
@@ -200,6 +235,18 @@ const C = {
     publish: "Publish article",
     saving: "Saving…",
     required: "Complete the title, summary, and body.",
+    archives: "Artist archives",
+    archivesIntro: "Independent web pages, kept separate from ordinary articles.",
+    addArchive: "New artist archive",
+    archiveEmpty: "No artist archives yet",
+    archiveName: "Artist / archive name",
+    archiveSummary: "Short description",
+    archiveUrl: "Web page URL",
+    archiveUrlHelp: "Paste the deployed page URL. It opens as an independent web archive.",
+    archiveCover: "Archive cover",
+    saveArchive: "Save archive",
+    archiveSaved: "Artist archive saved",
+    archiveRequired: "Complete the name and URL.",
   },
 };
 
@@ -376,6 +423,7 @@ const editorCss =
 const extraCss = `.dashboard{display:grid;grid-template-columns:repeat(4,1fr) 2fr;gap:10px;margin-bottom:18px}.dashboard>article{min-height:96px;display:flex;flex-direction:column;justify-content:space-between;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.dashboard small{color:#747168;font-size:9px;text-transform:uppercase;letter-spacing:.08em}.dashboard b{font-size:27px}.dashboard .service{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px}.dashboard .service svg{width:26px}.dashboard .service b{font-size:11px}.dashboard .service span{margin-left:auto;padding:5px 7px;border-radius:999px;background:#171612;color:#fff;font-size:8px}.filters{display:grid;grid-template-columns:minmax(220px,1fr) repeat(3,auto);gap:8px;margin:18px 0}.filters label{display:flex;align-items:center;gap:7px;border:1px solid #d5d2c9;border-radius:8px;background:#fff;padding:0 10px}.filters label svg{width:15px}.filters input{border:0!important;padding-left:0!important}.filters select{border:1px solid #d5d2c9;border-radius:8px;background:#fff;padding:0 10px;font-size:11px}.card time{display:block;margin-top:8px;color:#918e86;font-size:9px}.actions{flex-wrap:wrap}@media(max-width:850px){.dashboard{grid-template-columns:repeat(2,1fr)}.dashboard .service{grid-column:1/-1}.filters{grid-template-columns:1fr 1fr}.filters label{grid-column:1/-1}}@media(max-width:520px){.filters{grid-template-columns:1fr}.filters label{grid-column:auto}}`;
 
 const extraEditorCss = `.editorbar{position:sticky;top:76px;z-index:4}.fields textarea{min-height:260px}.modal:fullscreen{width:100vw;height:100vh;border-radius:0;overflow:auto}.modal-actions{display:flex;align-items:center;gap:7px}.modal-actions button:first-child{border:1px solid #d5d2c9;border-radius:999px;padding:7px 11px;font-size:10px}.formgrid select{width:100%;border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:11px 12px}.category-manager{margin:18px 0;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.category-manager>header{display:flex;align-items:center;justify-content:space-between}.category-manager>header button{border:0;border-radius:999px;background:#171612;color:#fff;padding:8px 12px;font-size:10px}.category-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.category-list>div{display:flex;align-items:center;gap:4px;border:1px solid #ddd9d0;border-radius:999px;padding:4px 7px}.category-list b{font-size:10px}.category-list small{color:#747168;font-size:8px}.category-list button{border:0;background:none;padding:3px;font-size:9px}`;
+const archiveAdminCss = `.archive-table{display:grid;gap:0}.archive-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #e7e5df}.archive-row>img,.archive-thumb{width:74px;height:50px;object-fit:cover;background:#f1f0eb}.archive-row-copy{min-width:0}.archive-row-copy b,.archive-row-copy small,.archive-row-copy span{display:block}.archive-row-copy b{font-size:12px}.archive-row-copy small{margin-top:4px;color:#77746c;font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.archive-row-copy span{margin-top:5px;color:#77746c;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.archive-empty{padding:18px 0;color:#77746c;font-size:10px}.archive-modal{max-width:720px}.archive-form-note{margin:0 0 14px;color:#77746c;font:12px/1.6 Georgia,serif}.archive-modal label{display:grid;gap:7px;margin-top:18px;font-size:11px;font-weight:750}.archive-modal input,.archive-modal textarea{width:100%;border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:11px 12px;outline:0}.archive-form-cover{margin-top:24px;padding-top:18px;border-top:1px solid #ddd9d0}.archive-form-cover .sectiontitle{align-items:flex-start}.archive-form-cover .sectiontitle b{font-size:11px}.archive-form-cover .sectiontitle button{font-size:10px}.archive-modal .toggles{margin:24px 0 0}.archive-modal footer{margin-top:4px}@media(max-width:720px){.archive-row{grid-template-columns:58px minmax(0,1fr);gap:10px}.archive-row>img,.archive-thumb{width:58px;height:44px}.archive-row .row-actions{grid-column:2}.archive-row-copy span{white-space:normal}.archive-modal{min-height:100dvh}.archive-modal section{margin:17px}.archive-modal footer{padding:15px 17px}}`;
 const operationsCss = `.admin-module{margin:18px 0;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.admin-module>header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.admin-module>header b{font-size:12px}.admin-module>header small{display:block;color:#747168;font-size:9px;margin-top:3px}.admin-module button,.admin-upload{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d5d2c9;border-radius:999px;background:#fff;padding:6px 9px;font-size:9px;cursor:pointer}.admin-upload{background:#171612;color:#fff}.admin-upload input{display:none}.status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.status-grid div{padding:10px;border-radius:7px;background:#f5f3ed}.status-grid i{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#aaa}.status-grid .ok i{background:#26834a}.status-grid b{font-size:9px}.error-log{margin-top:9px;color:#9a2d2d;font-size:9px}.file-table,.moderation-list{display:grid;gap:6px}.file-row,.moderation-row{display:grid;grid-template-columns:minmax(150px,1.5fr) repeat(3,minmax(70px,.6fr)) auto;align-items:center;gap:7px;padding:9px;border-top:1px solid #eee}.file-row b,.moderation-row b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}.file-row span,.moderation-row span{color:#747168;font-size:9px}.row-actions{display:flex;flex-wrap:wrap;gap:4px}.moderation-tools{display:flex;gap:6px}.moderation-tools select{border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:6px;font-size:9px}@media(max-width:760px){.status-grid{grid-template-columns:repeat(2,1fr)}.file-row,.moderation-row{grid-template-columns:1fr}.file-row>*:not(:first-child){display:inline-flex}.row-actions{margin-top:4px}}`;
 const adminThemeCss = `.a{background:#fff!important;color:#141311!important}.a>header{height:72px;padding:0 clamp(20px,4vw,48px)!important;background:rgba(255,255,255,.96)!important;color:#141311!important;border-bottom:1px solid #e7e5df;backdrop-filter:blur(14px)}.admin-brand{display:flex;align-items:center;gap:10px;color:#141311!important}.admin-brand img{width:36px;height:36px}.admin-brand span{font-size:16px;letter-spacing:-.03em}.a>header small{margin-left:46px;margin-top:-9px;color:#77746c!important;font-size:8px!important}.a nav>a,.a nav>button{color:#141311!important}.langs .dark{border-color:#d8d6d0!important;color:#77746c!important}.langs .dark[aria-pressed=true]{background:#141311!important;color:#fff!important;border-color:#141311!important}.content{max-width:1120px!important;padding:42px clamp(20px,4vw,48px) 80px!important}.heading{align-items:center!important;margin-bottom:26px!important;padding-bottom:26px;border-bottom:1px solid #e7e5df}.heading i,.loginbox i,.modal i{color:#77746c!important;font-size:8px!important}.heading h1,.loginbox h1{margin:8px 0!important;font-size:clamp(32px,5vw,52px)!important;letter-spacing:-.05em!important}.heading p{font-size:11px;max-width:480px}.primary{background:#141311!important;border-radius:999px!important;box-shadow:none!important}.notice{border:1px solid #e7e5df!important;border-left:1px solid #141311!important;border-radius:0!important}.dashboard{gap:0!important;border-block:1px solid #e7e5df}.dashboard>article{min-height:88px!important;border:0!important;border-right:1px solid #e7e5df!important;border-radius:0!important;padding:15px!important}.dashboard>article:last-child{border-right:0!important}.dashboard b{font-size:22px!important}.dashboard .service span{background:#141311!important}.admin-module,.category-manager{margin:24px 0!important;padding:0!important;border:0!important;border-radius:0!important}.admin-module>header,.category-manager>header{min-height:54px;margin:0!important;padding:0 0 12px;border-bottom:1px solid #141311}.admin-module>header b,.category-manager>header b{font-size:14px!important;letter-spacing:-.02em}.status-grid{gap:0!important;border-bottom:1px solid #e7e5df}.status-grid div{padding:16px 10px!important;border-right:1px solid #e7e5df;border-radius:0!important;background:#fff!important}.status-grid div:last-child{border-right:0}.file-row,.moderation-row{min-height:50px;padding:10px 0!important;border-top:0!important;border-bottom:1px solid #efeee9}.file-row b,.moderation-row b{font-size:11px!important}.category-list{gap:8px!important}.category-list>div{border-radius:999px!important;background:#fff;padding:6px 9px!important}.filters{position:sticky;top:72px;z-index:4;margin:30px 0 14px!important;padding:10px 0;background:rgba(255,255,255,.96);backdrop-filter:blur(14px)}.filters label,.filters select{border:0!important;border-bottom:1px solid #d8d6d0!important;border-radius:0!important;background:#fff!important}.grid{gap:0 34px!important}.grid article{border:0!important;border-top:1px solid #e7e5df!important;border-radius:0!important}.grid article>img{height:190px!important;margin-top:18px}.card{padding:18px 0 26px!important}.meta{color:#77746c!important}.card h2{font-size:18px!important}.actions button,.modal footer>button{background:#fff!important;border-color:#d8d6d0!important;box-shadow:none!important}.modal{background:#fff!important;border-radius:0!important}.modalhead{border-color:#e7e5df!important}.fields{border-color:#e7e5df!important}.editorbar{background:#fafafa!important;border-color:#e7e5df!important}.login{background:#fff!important}.loginbar>a{color:#141311!important}.loginbox{border:0!important;border-top:1px solid #141311!important;border-radius:0!important}.loginbox .primary{height:44px}.danger{color:#77746c!important}@media(max-width:720px){.a>header{height:64px}.admin-brand img{width:32px;height:32px}.admin-brand span{font-size:14px}.a>header small{display:none}.content{padding:28px 18px 72px!important}.heading{align-items:flex-start!important}.dashboard{grid-template-columns:repeat(2,1fr)!important}.dashboard>article{border-bottom:1px solid #e7e5df!important}.status-grid{grid-template-columns:1fr 1fr!important}.filters{top:64px!important;overflow-x:auto;grid-template-columns:minmax(180px,1fr) repeat(3,120px)!important}.grid article>img{height:170px!important}}`;
 
@@ -395,12 +443,14 @@ export default function Admin() {
     ),
     [pass, setPass] = useState(""),
     [items, setItems] = useState([]),
+    [archives, setArchives] = useState([]),
     [meta, setMeta] = useState({ communityPosts: 0, services: {} }),
     [managedCategories, setManagedCategories] = useState([]),
     [communityPosts, setCommunityPosts] = useState([]),
     [systemStatus, setSystemStatus] = useState({ services: {}, errors: [] }),
     [communityLanguage, setCommunityLanguage] = useState("all"),
     [edit, setEdit] = useState(null),
+    [archiveEdit, setArchiveEdit] = useState(null),
     [msg, setMsg] = useState(""),
     [busy, setBusy] = useState(false),
     [query, setQuery] = useState(""),
@@ -419,6 +469,7 @@ export default function Admin() {
       editorCss +
       extraCss +
       extraEditorCss +
+      archiveAdminCss +
       operationsCss +
       adminThemeCss +
       loginThemeCss +
@@ -456,6 +507,20 @@ export default function Admin() {
     if (!r.ok) throw Error(d.error || t.error);
     return d;
   };
+  const archiveApi = async (path = "", opt = {}) => {
+    const r = await fetch(`/api/archives${path}`, {
+        cache: "no-store",
+        ...opt,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          ...opt.headers,
+        },
+      }),
+      d = await r.json().catch(() => ({}));
+    if (!r.ok) throw Error(d.error || t.error);
+    return d;
+  };
   const adminApi = async (endpoint, opt = {}) => {
     const r = await fetch(`/api/${endpoint}`, {
         cache: "no-store",
@@ -473,13 +538,15 @@ export default function Admin() {
   const load = async () => {
     setBusy(true);
     try {
-      const [data, cats, community, system] = await Promise.all([
+      const [data, cats, archiveData, community, system] = await Promise.all([
         api(`?all=1&t=${Date.now()}`),
         categoryApi(`?t=${Date.now()}`),
+        archiveApi(`?all=1&t=${Date.now()}`),
         adminApi(`community-admin?t=${Date.now()}`),
         adminApi(`system-status?t=${Date.now()}`),
       ]);
       setItems(data.articles);
+      setArchives(archiveData.archives || []);
       setMeta(data.meta || { communityPosts: 0, services: {} });
       setManagedCategories(cats.categories || []);
       setCommunityPosts(community.posts || []);
@@ -699,6 +766,52 @@ export default function Admin() {
     if (e.target.files[0])
       set("cover_image", await compress(e.target.files[0]));
     e.target.value = "";
+  };
+  const openArchive = (archive = null) => {
+    setArchiveEdit(archive ? { ...blankArchive, ...archive } : { ...blankArchive });
+    setMsg("");
+  };
+  const archiveCover = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const image = await compress(file);
+      setArchiveEdit((current) => ({ ...current, cover_image: image }));
+    }
+    e.target.value = "";
+  };
+  const saveArchive = async (e) => {
+    e.preventDefault();
+    if (!archiveEdit?.title?.trim() || !archiveEdit?.page_url?.trim()) {
+      setMsg(t.archiveRequired);
+      return;
+    }
+    setBusy(true);
+    try {
+      await archiveApi("", {
+        method: "POST",
+        body: JSON.stringify({ ...archiveEdit, published: archiveEdit.published !== false }),
+      });
+      setArchiveEdit(null);
+      setMsg(t.archiveSaved);
+      await load();
+    } catch (error) {
+      setMsg(error.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+  const removeArchive = async (archive) => {
+    if (!confirm(`${t.confirm} “${archive.title}”?`)) return;
+    setBusy(true);
+    try {
+      await archiveApi(`?id=${archive.id}`, { method: "DELETE" });
+      setMsg(t.deleted);
+      await load();
+    } catch (error) {
+      setMsg(error.message);
+    } finally {
+      setBusy(false);
+    }
   };
   const importPdf = async (event) => {
     const file = event.target.files?.[0];
@@ -1152,6 +1265,34 @@ export default function Admin() {
           </button>
         </div>
         {msg && <div className="notice">{msg}</div>}
+        <section className="admin-module archive-manager">
+          <header>
+            <div>
+              <b>{t.archives}</b>
+              <small>{t.archivesIntro}</small>
+            </div>
+            <button className="primary" onClick={() => openArchive()}>
+              <Plus size={13} />
+              {t.addArchive}
+            </button>
+          </header>
+          <div className="archive-table">
+            {archives.length ? archives.map((archive) => (
+              <div className="archive-row" key={archive.id}>
+                {archive.cover_image ? <img src={archive.cover_image} alt="" /> : <div className="archive-thumb" />}
+                <div className="archive-row-copy">
+                  <b>{archive.title}</b>
+                  <small>{archive.published ? t.published : t.draft} · {archive.page_url}</small>
+                  {archive.summary && <span>{archive.summary}</span>}
+                </div>
+                <div className="row-actions">
+                  <button onClick={() => openArchive(archive)}>{t.edit}</button>
+                  <button className="danger" onClick={() => removeArchive(archive)}>{t.del}</button>
+                </div>
+              </div>
+            )) : <p className="archive-empty">{t.archiveEmpty}</p>}
+          </div>
+        </section>
         <section className="dashboard">
           {stats.map((stat) => (
             <article key={stat.label}>
@@ -1804,6 +1945,61 @@ export default function Admin() {
               <button className="primary" disabled={busy}>
                 {busy ? t.saving : t.publish}
               </button>
+            </footer>
+          </form>
+        </div>
+      )}
+      {archiveEdit && (
+        <div className="shade">
+          <form className="modal archive-modal" onSubmit={saveArchive}>
+            <div className="modalhead">
+              <div>
+                <i>ARTIST ARCHIVE</i>
+                <h2>{archiveEdit.id ? t.edit : t.addArchive}</h2>
+              </div>
+              <button type="button" onClick={() => setArchiveEdit(null)} aria-label={t.close}>
+                <X />
+              </button>
+            </div>
+            <section>
+              <p className="archive-form-note">{t.archiveUrlHelp}</p>
+              <label>
+                {t.archiveName}
+                <input value={archiveEdit.title} onChange={(e) => setArchiveEdit({ ...archiveEdit, title: e.target.value })} required />
+              </label>
+              <label>
+                {t.archiveSummary}
+                <textarea rows="3" value={archiveEdit.summary} onChange={(e) => setArchiveEdit({ ...archiveEdit, summary: e.target.value })} />
+              </label>
+              <label>
+                {t.archiveUrl}
+                <input type="url" placeholder="https://…" value={archiveEdit.page_url} onChange={(e) => setArchiveEdit({ ...archiveEdit, page_url: e.target.value })} required />
+              </label>
+              <div className="archive-form-cover">
+                <div className="sectiontitle">
+                  <div>
+                    <b>{t.archiveCover}</b>
+                    <small>{t.coverHelp}</small>
+                  </div>
+                  {archiveEdit.cover_image && <button type="button" className="danger" onClick={() => setArchiveEdit({ ...archiveEdit, cover_image: "" })}>{t.removeImage}</button>}
+                </div>
+                {archiveEdit.cover_image && <img className="preview" src={archiveEdit.cover_image} alt="" />}
+                <label className="upload">
+                  <ImagePlus size={16} />
+                  {t.chooseCover}
+                  <input type="file" accept="image/*" onChange={archiveCover} />
+                </label>
+              </div>
+              <div className="toggles">
+                <label>
+                  <input type="checkbox" checked={archiveEdit.published !== false} onChange={(e) => setArchiveEdit({ ...archiveEdit, published: e.target.checked })} />
+                  {t.published}
+                </label>
+              </div>
+            </section>
+            <footer>
+              <button type="button" onClick={() => setArchiveEdit(null)}>{t.close}</button>
+              <button className="primary" disabled={busy}>{busy ? t.saving : t.saveArchive}</button>
             </footer>
           </form>
         </div>
