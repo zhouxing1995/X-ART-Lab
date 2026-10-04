@@ -24,7 +24,7 @@ export async function onRequestGet({request,env}){
   await init(env.DB);
   const all=new URL(request.url).searchParams.get("all")==="1";
   if(all&&!authorized(request,env))return json({error:"Unauthorized"},401);
-  const query=all?"SELECT * FROM artist_archives ORDER BY sort_order,id":"SELECT * FROM artist_archives WHERE published=1 ORDER BY sort_order,id";
+  const query=all?"SELECT * FROM artist_archives ORDER BY created_at DESC,id DESC":"SELECT * FROM artist_archives WHERE published=1 ORDER BY created_at DESC,id DESC";
   const {results}=await env.DB.prepare(query).all();
   return json({archives:results.map(item=>({...item,published:Boolean(item.published)}))});
 }
