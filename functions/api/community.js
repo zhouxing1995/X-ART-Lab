@@ -1,5 +1,5 @@
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{"content-type":"application/json;charset=UTF-8","cache-control":"no-store"}});const clean=value=>String(value||"").replace(/[<>]/g,"").trim();
-const normalizeImage=value=>{const raw=String(value||"").trim(),comma=raw.indexOf(",");if(!raw.startsWith("data:image/")||comma<0)return "";const header=raw.slice(0,comma).replace("image/jpg","image/jpeg"),payload=raw.slice(comma+1).replace(/\s/g,"");if(!/^data:image\/(?:jpeg|jpg|png|webp);base64$/i.test(header)||!payload||payload.length>180000||payload.length%4===1||!/^[A-Za-z0-9+/=]+$/.test(payload))return "";return header+","+payload;};
+const normalizeImage=value=>{const raw=String(value||"").trim();if(/^https?:\/\//i.test(raw))return raw.length<=2048?raw:"";const comma=raw.indexOf(",");if(!raw.startsWith("data:image/")||comma<0)return "";const header=raw.slice(0,comma).replace("image/jpg","image/jpeg"),payload=raw.slice(comma+1).replace(/\s/g,"");if(!/^data:image\/(?:jpeg|jpg|png|webp);base64$/i.test(header)||!payload||payload.length>140000||payload.length%4===1||!/^[A-Za-z0-9+/=]+$/.test(payload))return "";return header+","+payload;};
 
 async function initialize(db){
   await db.prepare(`CREATE TABLE IF NOT EXISTS community_posts (
