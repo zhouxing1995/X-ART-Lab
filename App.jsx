@@ -338,6 +338,7 @@ const responsiveStyles=`
   
 }
 .xart-discover{overflow-y:auto}.xart-discover-feed{flex:0 0 auto;overflow:visible}
+.xart-discover-categories{flex:0 0 auto;min-height:46px;align-items:center;white-space:nowrap;overflow-x:auto;overflow-y:hidden;position:relative;z-index:2;background:#fff;-webkit-overflow-scrolling:touch;scrollbar-width:none}.xart-discover-categories::-webkit-scrollbar{display:none}.xart-discover-archives{flex:0 0 auto}
 `;
 
 export default function App(){
