@@ -337,6 +337,7 @@ const responsiveStyles=`
 @media (max-width:699px){
   
 }
+.xart-discover{overflow-y:auto}.xart-discover-feed{flex:0 0 auto;overflow:visible}
 `;
 
 export default function App(){
