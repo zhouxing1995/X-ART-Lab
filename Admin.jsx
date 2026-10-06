@@ -1397,7 +1397,7 @@ export default function Admin() {
           </div>
         </section>
 
-          {stats.map((stat) => (
+          <section className="dashboard">{stats.map((stat) => (
             <article key={stat.label}>
               <small>{stat.label}</small>
               <b>{stat.value}</b>
