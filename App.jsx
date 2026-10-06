@@ -115,7 +115,7 @@ function Reader({item,lang,setLang,back,toSubscribe,subscribed}){
         <div className="swiss-meta"><b>{item.n}</b><span>{item.tag}</span><span>{item.minutes} {t.read}</span></div>
         <h1>{item[lang][0]}</h1>
       </section>
-      {item.cover_image&&<img className="swiss-cover" src={item.cover_image} alt=""/>}
+      {item.cover_image&&<img className="swiss-cover" src={item.cover_image} alt="" loading="eager" decoding="async" fetchPriority="high"/>}
       <section className="swiss-reader-body">
         <p className="swiss-summary">{item[lang][1]}</p>
         <div className="swiss-body-rule"/>
