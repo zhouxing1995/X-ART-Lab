@@ -504,7 +504,7 @@ export default function Admin() {
     [pass, setPass] = useState(""),
     [items, setItems] = useState([]),
     [archives, setArchives] = useState([]),
-    [members, setMembers] = useState([]),
+    [members, setMembers] = useState([]), [memberEmail, setMemberEmail] = useState(""), [memberModal, setMemberModal] = useState(false),
     [meta, setMeta] = useState({ communityPosts: 0, services: {} }),
     [managedCategories, setManagedCategories] = useState([]),
     [communityPosts, setCommunityPosts] = useState([]),
@@ -915,27 +915,7 @@ export default function Admin() {
     } finally {
       setBusy(false);
     }
-  };  const addMember = async () => {
-    const email = prompt(t.memberEmail);
-    if (!email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setMsg(t.memberRequired);
-      return;
-    }
-    setBusy(true);
-    try {
-      await memberApi("", {
-        method: "POST",
-        body: JSON.stringify({ email: email.trim(), plan: "yearly", active: true, expires_at: "" }),
-      });
-      setMsg(t.memberSaved);
-      await load();
-    } catch (error) {
-      setMsg(error.message);
-    } finally {
-      setBusy(false);
-    }
-  };
-  const importPdf = async (event) => {
+  };  const addMember = () => { setMemberEmail(""); setMemberModal(true); }; const saveMember = async (e) => { e.preventDefault(); const email = memberEmail.trim(); if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg(t.memberRequired); return; } setBusy(true); try { await memberApi("", { method: "POST", body: JSON.stringify({ email, plan: "yearly", active: true, expires_at: "" }) }); setMemberModal(false); setMemberEmail(""); setMsg(t.memberSaved); await load(); } catch (error) { setMsg(error.message); } finally { setBusy(false); } };  const importPdf = async (event) => {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file) return;
@@ -1394,7 +1374,7 @@ export default function Admin() {
             )) : <p className="archive-empty">{t.archiveEmpty}</p>}
           </div>
         </section>
-        <section className="admin-module member-manager">
+        <>
           <header>
             <div>
               <b>{t.members}</b>
@@ -1416,7 +1396,7 @@ export default function Admin() {
             )) : <p className="archive-empty">{t.memberEmpty}</p>}
           </div>
         </section>
-        <section className="dashboard">
+
           {stats.map((stat) => (
             <article key={stat.label}>
               <small>{stat.label}</small>
