@@ -42,6 +42,11 @@ const blank = {
   en_title: "",
   en_summary: "",
   en_content: "",
+};const blankMember = {
+  email: "",
+  plan: "yearly",
+  active: true,
+  expires_at: "",
 };
 const blankArchive = {
   id: null,
@@ -129,7 +134,7 @@ const C = {
     archiveCover: "档案封面",
     saveArchive: "保存档案",
     archiveSaved: "艺术家档案已保存",
-    archiveRequired: "请填写名称和网页链接。",
+    archiveRequired: "请填写名称和网页链接。", members: "订阅用户", membersIntro: "按邮箱授予年度会员或定制客户访问权限。", addMember: "添加订阅用户", memberEmpty: "还没有订阅用户", memberEmail: "用户邮箱", memberPlan: "权限类型", memberYearly: "年度会员", memberCustom: "定制客户", memberActive: "已开通", memberInactive: "已停用", memberExpires: "到期时间（可选）", saveMember: "保存权限", memberSaved: "订阅用户权限已保存", memberRequired: "请填写有效的邮箱地址。",
   },
   fr: {
     admin: "Administration des articles",
@@ -193,7 +198,7 @@ const C = {
     archiveCover: "Couverture",
     saveArchive: "Enregistrer l’archive",
     archiveSaved: "Archive enregistrée",
-    archiveRequired: "Renseignez le nom et l’URL.",
+    archiveRequired: "Renseignez le nom et l’URL.", members: "Utilisateurs abonnés", membersIntro: "Accordez l’accès annuel ou client personnalisé par e-mail.", addMember: "Ajouter un abonné", memberEmpty: "Aucun abonné", memberEmail: "E-mail de l’utilisateur", memberPlan: "Type d’accès", memberYearly: "Membre annuel", memberCustom: "Client personnalisé", memberActive: "Actif", memberInactive: "Désactivé", memberExpires: "Expiration (facultatif)", saveMember: "Enregistrer l’accès", memberSaved: "Accès de l’abonné enregistré", memberRequired: "Saisissez une adresse e-mail valide.",
   },
   en: {
     admin: "Article admin",
@@ -256,7 +261,7 @@ const C = {
     archiveCover: "Archive cover",
     saveArchive: "Save archive",
     archiveSaved: "Artist archive saved",
-    archiveRequired: "Complete the name and URL.",
+    archiveRequired: "Complete the name and URL.", members: "Subscriber access", membersIntro: "Grant annual-member or custom-client access by email.", addMember: "Add subscriber", memberEmpty: "No subscribers yet", memberEmail: "User email", memberPlan: "Access type", memberYearly: "Annual member", memberCustom: "Custom client", memberActive: "Active", memberInactive: "Disabled", memberExpires: "Expiry (optional)", saveMember: "Save access", memberSaved: "Subscriber access saved", memberRequired: "Enter a valid email address.",
   },
 };
 
