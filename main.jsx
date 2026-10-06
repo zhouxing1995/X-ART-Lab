@@ -1,4 +1,5 @@
 import React from "react";
+// X-ART Lab admin localization build marker
 import ReactDOM from "react-dom/client";
 import GewuApp from "./App.jsx";
 
