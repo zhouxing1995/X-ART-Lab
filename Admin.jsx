@@ -260,6 +260,36 @@ const C = {
   },
 };
 
+const adminUI = {
+  zh: {
+    statusTitle: "系统状态", checkAgain: "重新检测", database: "数据库", aiModel: "AI 模型", translationService: "翻译服务", pdfService: "PDF 服务", audioService: "音频服务",
+    filesTitle: "文件与下载管理", filesIntro: "检查 PDF、音频与手机端下载", uploadPdf: "上传 PDF 到发现页", uploaded: "已上传", ready: "可生成", audio: "音频", generated: "已生成", unavailable: "不可用", dynamic: "动态生成", downloadTest: "下载测试", regeneratePdf: "重新生成 PDF", regenerateAudio: "重新生成音频", pdfWillRegenerate: "PDF 将在下次下载时重新生成",
+    communityTitle: "社区管理", communityIntro: "帖子、回复、推荐与举报审核", allLanguages: "全部语言", hidden: "已隐藏", visible: "显示中", reported: "被举报", recommended: "推荐", ordinary: "普通", restore: "恢复", hide: "隐藏", unpin: "取消置顶", pin: "置顶", unrecommend: "取消推荐", recommend: "推荐", deleteConfirm: "确定删除？",
+    categoryManager: "分类管理", addCategory: "新建分类", categoryName: "分类名称", chooseCategory: "选择分类", searchTitle: "搜索标题", allStatus: "全部状态", allCategories: "全部分类", recentlyUpdated: "最近更新", articleNumber: "文章编号", sortTitle: "标题", updatedAt: "更新于", copy: "复制", fullscreen: "全屏",
+    generateFromPdf: "从 PDF 自动生成文章", pdfHelp: "保留原文段落，自动生成中文、法语和英文", translateAll: "自动生成另外两种语言", translateHelp: "只需填写当前语言；点击后自动生成中文、法语和英文。", translating: "正在生成另外两种语言…", translated: "三种语言已生成，可分别切换修改。", translationPending: "翻译待生成",
+    serviceStatus: "服务状态", archiveSuffix: "艺术家档案", font: "字体", fontSize: "字号", fontSans: "无衬线", fontSerif: "衬线", fontSong: "宋体 / Songti", fontKaiti: "楷体 / Kaiti", fontHeiti: "黑体 / Heiti", fontMono: "等宽", textColor: "文字颜色", bgColor: "背景颜色", selectedText: "选中文字", linkAddress: "输入链接地址", linkText: "链接文字", bodyEditor: "可拖入图片的正文编辑器", chars: "字符", images: "张图片", chinese: "中文", french: "Français", english: "English", slug: "Slug",
+    archiveHoSummary: "中英法三语艺术家档案、作品时间线、东京重点个展、作品资料与研究来源。", archivePhilippeSummary: "独立艺术家网页档案：艺术家简介、展览时间线、Noor、图录、机构档案、研究文章与艺术理论。",
+  },
+  fr: {
+    statusTitle: "État du système", checkAgain: "Vérifier à nouveau", database: "Base de données", aiModel: "Modèle IA", translationService: "Service de traduction", pdfService: "Service PDF", audioService: "Service audio",
+    filesTitle: "Fichiers et téléchargements", filesIntro: "Vérifier les PDF, l’audio et les téléchargements mobiles", uploadPdf: "Téléverser un PDF dans Découvrir", uploaded: "Téléversé", ready: "Disponible", audio: "Audio", generated: "Généré", unavailable: "Indisponible", dynamic: "Généré à la demande", downloadTest: "Tester le téléchargement", regeneratePdf: "Régénérer le PDF", regenerateAudio: "Régénérer l’audio", pdfWillRegenerate: "Le PDF sera régénéré au prochain téléchargement",
+    communityTitle: "Gestion de la communauté", communityIntro: "Modérer les publications, réponses, recommandations et signalements", allLanguages: "Toutes les langues", hidden: "Masqué", visible: "Visible", reported: "Signalé", recommended: "Recommandé", ordinary: "Standard", restore: "Restaurer", hide: "Masquer", unpin: "Retirer de la une", pin: "Épingler", unrecommend: "Retirer la recommandation", recommend: "Recommander", deleteConfirm: "Supprimer ?",
+    categoryManager: "Gestion des catégories", addCategory: "Nouvelle catégorie", categoryName: "Nom de la catégorie", chooseCategory: "Choisir une catégorie", searchTitle: "Rechercher un titre", allStatus: "Tous les statuts", allCategories: "Toutes les catégories", recentlyUpdated: "Dernière mise à jour", articleNumber: "Numéro de l’article", sortTitle: "Titre", updatedAt: "Mis à jour le", copy: "Copier", fullscreen: "Plein écran",
+    generateFromPdf: "Créer depuis un PDF", pdfHelp: "Conserver les paragraphes · générer chinois, français et anglais", translateAll: "Générer les deux autres langues", translateHelp: "Renseignez une seule langue ; les trois versions seront générées automatiquement.", translating: "Génération des deux autres langues…", translated: "Les trois langues sont prêtes et restent modifiables.", translationPending: "Traduction à générer",
+    serviceStatus: "État des services", archiveSuffix: "Archive d’artiste", font: "Police", fontSize: "Taille", fontSans: "Sans serif", fontSerif: "Serif", fontSong: "Songti", fontKaiti: "Kaiti", fontHeiti: "Heiti", fontMono: "Monospace", textColor: "Couleur du texte", bgColor: "Couleur de fond", selectedText: "Texte sélectionné", linkAddress: "Adresse du lien", linkText: "Texte du lien", bodyEditor: "Éditeur avec dépôt d’images", chars: "caractères", images: "images", chinese: "Chinois", french: "Français", english: "Anglais", slug: "Slug",
+    archiveHoSummary: "Archive trilingue de l’artiste, chronologie des œuvres, expositions majeures à Tokyo, documents et sources de recherche.", archivePhilippeSummary: "Archive web indépendante : biographie, chronologie des expositions, Noor, catalogues, archives institutionnelles et théorie de l’art.",
+  },
+  en: {
+    statusTitle: "System status", checkAgain: "Check again", database: "Database", aiModel: "AI model", translationService: "Translation service", pdfService: "PDF service", audioService: "Audio service",
+    filesTitle: "Files and downloads", filesIntro: "Check PDFs, audio, and mobile downloads", uploadPdf: "Upload PDF to Discover", uploaded: "Uploaded", ready: "Ready", audio: "Audio", generated: "Generated", unavailable: "Unavailable", dynamic: "Generated on demand", downloadTest: "Test download", regeneratePdf: "Regenerate PDF", regenerateAudio: "Regenerate audio", pdfWillRegenerate: "The PDF will be regenerated on the next download",
+    communityTitle: "Community management", communityIntro: "Review posts, replies, recommendations, and reports", allLanguages: "All languages", hidden: "Hidden", visible: "Visible", reported: "Reported", recommended: "Recommended", ordinary: "Standard", restore: "Restore", hide: "Hide", unpin: "Unpin", pin: "Pin", unrecommend: "Remove recommendation", recommend: "Recommend", deleteConfirm: "Delete?",
+    categoryManager: "Category management", addCategory: "New category", categoryName: "Category name", chooseCategory: "Choose category", searchTitle: "Search titles", allStatus: "All status", allCategories: "All categories", recentlyUpdated: "Recently updated", articleNumber: "Article number", sortTitle: "Title", updatedAt: "Updated", copy: "Copy", fullscreen: "Fullscreen",
+    generateFromPdf: "Generate from PDF", pdfHelp: "Preserve paragraphs · generate Chinese, French, and English", translateAll: "Generate the other two languages", translateHelp: "Fill in one language; the other two versions will be generated automatically.", translating: "Generating the other two languages…", translated: "All three languages are ready and can be edited separately.", translationPending: "Translation pending",
+    serviceStatus: "Service status", archiveSuffix: "Artist archive", font: "Font", fontSize: "Font size", fontSans: "Sans serif", fontSerif: "Serif", fontSong: "Songti", fontKaiti: "Kaiti", fontHeiti: "Heiti", fontMono: "Monospace", textColor: "Text color", bgColor: "Background color", selectedText: "Selected text", linkAddress: "Link address", linkText: "Link text", bodyEditor: "Article editor with image drop", chars: "characters", images: "images", chinese: "Chinese", french: "French", english: "English", slug: "Slug",
+    archiveHoSummary: "Trilingual artist archive, artwork timeline, major Tokyo exhibitions, artwork documentation, and research sources.", archivePhilippeSummary: "Independent artist web archive: biography, exhibition timeline, Noor, catalogues, institutional archives, and art theory.",
+  },
+};
+
 const detect = (a) =>
   a.language && a.language !== "all"
     ? a.language
@@ -276,6 +306,20 @@ const detectText = (value) =>
       : "en";
 const title = (a) =>
   a[`${detect(a)}_title`] || a.zh_title || a.fr_title || a.en_title || "—";
+const displayTitle = (a, lang) => {
+  const value = String((a || {})[lang + "_title"] || "").trim();
+  if (lang !== "zh" && /[\u3400-\u9fff]/.test(value)) return adminUI[lang].translationPending;
+  return value || (lang === "zh" ? title(a) : adminUI[lang].translationPending);
+};
+const archiveArtist = (archive) => String((archive || {}).title || "").replace(/\s*[｜|].*$/, "").trim() || String((archive || {}).title || "").trim();
+const archiveDisplayTitle = (archive, lang) => archiveArtist(archive) + " · " + adminUI[lang].archiveSuffix;
+const archiveDisplaySummary = (archive, lang) => {
+  const identity = String((archive || {}).title || "") + " " + String((archive || {}).page_url || "");
+  if (/ho[\s-]*tzu[\s-]*nyen/i.test(identity)) return adminUI[lang].archiveHoSummary;
+  if (/philippe[\s-]*parreno/i.test(identity)) return adminUI[lang].archivePhilippeSummary;
+  const value = String((archive || {})[lang + "_summary"] || (archive || {}).summary || "").trim();
+  return lang !== "zh" && /[\u3400-\u9fff]/.test(value) ? adminUI[lang].translationPending : value;
+};
 const compress = (file) =>
   new Promise((ok, no) => {
     const r = new FileReader();
@@ -432,7 +476,7 @@ const editorCss =
 
 const extraCss = `.dashboard{display:grid;grid-template-columns:repeat(4,1fr) 2fr;gap:10px;margin-bottom:18px}.dashboard>article{min-height:96px;display:flex;flex-direction:column;justify-content:space-between;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.dashboard small{color:#747168;font-size:9px;text-transform:uppercase;letter-spacing:.08em}.dashboard b{font-size:27px}.dashboard .service{flex-direction:row;align-items:center;justify-content:flex-start;gap:12px}.dashboard .service svg{width:26px}.dashboard .service b{font-size:11px}.dashboard .service span{margin-left:auto;padding:5px 7px;border-radius:999px;background:#171612;color:#fff;font-size:8px}.filters{display:grid;grid-template-columns:minmax(220px,1fr) repeat(3,auto);gap:8px;margin:18px 0}.filters label{display:flex;align-items:center;gap:7px;border:1px solid #d5d2c9;border-radius:8px;background:#fff;padding:0 10px}.filters label svg{width:15px}.filters input{border:0!important;padding-left:0!important}.filters select{border:1px solid #d5d2c9;border-radius:8px;background:#fff;padding:0 10px;font-size:11px}.card time{display:block;margin-top:8px;color:#918e86;font-size:9px}.actions{flex-wrap:wrap}@media(max-width:850px){.dashboard{grid-template-columns:repeat(2,1fr)}.dashboard .service{grid-column:1/-1}.filters{grid-template-columns:1fr 1fr}.filters label{grid-column:1/-1}}@media(max-width:520px){.filters{grid-template-columns:1fr}.filters label{grid-column:auto}}`;
 
-const extraEditorCss = `.editorbar{position:sticky;top:76px;z-index:4}.fields textarea{min-height:260px}.modal:fullscreen{width:100vw;height:100vh;border-radius:0;overflow:auto}.modal-actions{display:flex;align-items:center;gap:7px}.modal-actions button:first-child{border:1px solid #d5d2c9;border-radius:999px;padding:7px 11px;font-size:10px}.formgrid select{width:100%;border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:11px 12px}.category-manager{margin:18px 0;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.category-manager>header{display:flex;align-items:center;justify-content:space-between}.category-manager>header button{border:0;border-radius:999px;background:#171612;color:#fff;padding:8px 12px;font-size:10px}.category-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.category-list>div{display:flex;align-items:center;gap:4px;border:1px solid #ddd9d0;border-radius:999px;padding:4px 7px}.category-list b{font-size:10px}.category-list small{color:#747168;font-size:8px}.category-list button{border:0;background:none;padding:3px;font-size:9px}`;
+const extraEditorCss = `.editorbar{position:sticky;top:76px;z-index:4}.fields textarea{min-height:260px}.modal:fullscreen{width:100vw;height:100vh;border-radius:0;overflow:auto}.modal-actions{display:flex;align-items:center;gap:7px}.modal-actions button:first-child{border:1px solid #d5d2c9;border-radius:999px;padding:7px 11px;font-size:10px}.formgrid select{width:100%;border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:11px 12px}.category-manager{margin:18px 0;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.category-manager>header{display:flex;align-items:center;justify-content:space-between}.category-manager>header button{border:0;border-radius:999px;background:#171612;color:#fff;padding:8px 12px;font-size:10px}.category-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.category-list>div{display:flex;align-items:center;gap:4px;border:1px solid #ddd9d0;border-radius:999px;padding:4px 7px}.category-list b{font-size:10px}.category-list small{color:#747168;font-size:8px}.category-list button{border:0;background:none;padding:3px;font-size:9px}.translation-tools{display:flex;align-items:center;gap:12px;margin:14px 25px 0;padding:12px 14px;border:1px solid #dcdcdc;background:#fafaf8}.translation-tools button{border:1px solid #0b0b0b;background:#0b0b0b;color:#fff;padding:9px 13px;font-size:10px;cursor:pointer}.translation-tools button:disabled{opacity:.5;cursor:wait}.translation-tools small{color:#777;font-size:10px;line-height:1.5}`;
 const archiveAdminCss = `.archive-table{display:grid;gap:0}.archive-row{display:grid;grid-template-columns:74px minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #e7e5df}.archive-row>img,.archive-thumb{width:74px;height:50px;object-fit:cover;background:#f1f0eb}.archive-row-copy{min-width:0}.archive-row-copy b,.archive-row-copy small,.archive-row-copy span{display:block}.archive-row-copy b{font-size:12px}.archive-row-copy small{margin-top:4px;color:#77746c;font-size:9px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.archive-row-copy span{margin-top:5px;color:#77746c;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.archive-empty{padding:18px 0;color:#77746c;font-size:10px}.archive-modal{max-width:720px}.archive-form-note{margin:0 0 14px;color:#77746c;font:12px/1.6 Georgia,serif}.archive-modal label{display:grid;gap:7px;margin-top:18px;font-size:11px;font-weight:750}.archive-modal input,.archive-modal textarea{width:100%;border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:11px 12px;outline:0}.archive-form-cover{margin-top:24px;padding-top:18px;border-top:1px solid #ddd9d0}.archive-form-cover .sectiontitle{align-items:flex-start}.archive-form-cover .sectiontitle b{font-size:11px}.archive-form-cover .sectiontitle button{font-size:10px}.archive-modal .toggles{margin:24px 0 0}.archive-modal footer{margin-top:4px}@media(max-width:720px){.archive-row{grid-template-columns:58px minmax(0,1fr);gap:10px}.archive-row>img,.archive-thumb{width:58px;height:44px}.archive-row .row-actions{grid-column:2}.archive-row-copy span{white-space:normal}.archive-modal{min-height:100dvh}.archive-modal section{margin:17px}.archive-modal footer{padding:15px 17px}}`;
 const operationsCss = `.admin-module{margin:18px 0;padding:16px;border:1px solid #ddd9d0;border-radius:10px;background:#fff}.admin-module>header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.admin-module>header b{font-size:12px}.admin-module>header small{display:block;color:#747168;font-size:9px;margin-top:3px}.admin-module button,.admin-upload{display:inline-flex;align-items:center;justify-content:center;border:1px solid #d5d2c9;border-radius:999px;background:#fff;padding:6px 9px;font-size:9px;cursor:pointer}.admin-upload{background:#171612;color:#fff}.admin-upload input{display:none}.status-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.status-grid div{padding:10px;border-radius:7px;background:#f5f3ed}.status-grid i{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#aaa}.status-grid .ok i{background:#26834a}.status-grid b{font-size:9px}.error-log{margin-top:9px;color:#9a2d2d;font-size:9px}.file-table,.moderation-list{display:grid;gap:6px}.file-row,.moderation-row{display:grid;grid-template-columns:minmax(150px,1.5fr) repeat(3,minmax(70px,.6fr)) auto;align-items:center;gap:7px;padding:9px;border-top:1px solid #eee}.file-row b,.moderation-row b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px}.file-row span,.moderation-row span{color:#747168;font-size:9px}.row-actions{display:flex;flex-wrap:wrap;gap:4px}.moderation-tools{display:flex;gap:6px}.moderation-tools select{border:1px solid #d5d2c9;border-radius:7px;background:#fff;padding:6px;font-size:9px}@media(max-width:760px){.status-grid{grid-template-columns:repeat(2,1fr)}.file-row,.moderation-row{grid-template-columns:1fr}.file-row>*:not(:first-child){display:inline-flex}.row-actions{margin-top:4px}}`;
 const adminThemeCss = `.a{background:#fff!important;color:#141311!important}.a>header{height:72px;padding:0 clamp(20px,4vw,48px)!important;background:rgba(255,255,255,.96)!important;color:#141311!important;border-bottom:1px solid #e7e5df;backdrop-filter:blur(14px)}.admin-brand{display:flex;align-items:center;gap:10px;color:#141311!important}.admin-brand img{width:42px;height:42px;object-fit:contain}.admin-brand-divider{display:block;width:1px;height:28px;flex:0 0 auto;background:#141311;opacity:.72}.loginbar .admin-brand-divider{height:32px}.admin-brand span{font-size:16px;letter-spacing:-.03em}.a>header small{margin-left:46px;margin-top:-9px;color:#77746c!important;font-size:8px!important}.a nav>a,.a nav>button{color:#141311!important}.langs .dark{border-color:#d8d6d0!important;color:#77746c!important}.langs .dark[aria-pressed=true]{background:#141311!important;color:#fff!important;border-color:#141311!important}.content{max-width:1120px!important;padding:42px clamp(20px,4vw,48px) 80px!important}.heading{align-items:center!important;margin-bottom:26px!important;padding-bottom:26px;border-bottom:1px solid #e7e5df}.heading i,.loginbox i,.modal i{color:#77746c!important;font-size:8px!important}.heading h1,.loginbox h1{margin:8px 0!important;font-size:clamp(32px,5vw,52px)!important;letter-spacing:-.05em!important}.heading p{font-size:11px;max-width:480px}.primary{background:#141311!important;border-radius:999px!important;box-shadow:none!important}.notice{border:1px solid #e7e5df!important;border-left:1px solid #141311!important;border-radius:0!important}.dashboard{gap:0!important;border-block:1px solid #e7e5df}.dashboard>article{min-height:88px!important;border:0!important;border-right:1px solid #e7e5df!important;border-radius:0!important;padding:15px!important}.dashboard>article:last-child{border-right:0!important}.dashboard b{font-size:22px!important}.dashboard .service span{background:#141311!important}.admin-module,.category-manager{margin:24px 0!important;padding:0!important;border:0!important;border-radius:0!important}.admin-module>header,.category-manager>header{min-height:54px;margin:0!important;padding:0 0 12px;border-bottom:1px solid #141311}.admin-module>header b,.category-manager>header b{font-size:14px!important;letter-spacing:-.02em}.status-grid{gap:0!important;border-bottom:1px solid #e7e5df}.status-grid div{padding:16px 10px!important;border-right:1px solid #e7e5df;border-radius:0!important;background:#fff!important}.status-grid div:last-child{border-right:0}.file-row,.moderation-row{min-height:50px;padding:10px 0!important;border-top:0!important;border-bottom:1px solid #efeee9}.file-row b,.moderation-row b{font-size:11px!important}.category-list{gap:8px!important}.category-list>div{border-radius:999px!important;background:#fff;padding:6px 9px!important}.filters{position:sticky;top:72px;z-index:4;margin:30px 0 14px!important;padding:10px 0;background:rgba(255,255,255,.96);backdrop-filter:blur(14px)}.filters label,.filters select{border:0!important;border-bottom:1px solid #d8d6d0!important;border-radius:0!important;background:#fff!important}.grid{gap:0 34px!important}.grid article{border:0!important;border-top:1px solid #e7e5df!important;border-radius:0!important}.grid article>img{height:190px!important;margin-top:18px}.card{padding:18px 0 26px!important}.meta{color:#77746c!important}.card h2{font-size:18px!important}.actions button,.modal footer>button{background:#fff!important;border-color:#d8d6d0!important;box-shadow:none!important}.modal{background:#fff!important;border-radius:0!important}.modalhead{border-color:#e7e5df!important}.fields{border-color:#e7e5df!important}.editorbar{background:#fafafa!important;border-color:#e7e5df!important}.login{background:#fff!important}.loginbar>a{color:#141311!important}.loginbox{border:0!important;border-top:1px solid #141311!important;border-radius:0!important}.loginbox .primary{height:44px}.danger{color:#77746c!important}@media(max-width:720px){.a>header{height:64px}.admin-brand img{width:32px;height:32px}.admin-brand span{font-size:14px}.a>header small{display:none}.content{padding:28px 18px 72px!important}.heading{align-items:flex-start!important}.dashboard{grid-template-columns:repeat(2,1fr)!important}.dashboard>article{border-bottom:1px solid #e7e5df!important}.status-grid{grid-template-columns:1fr 1fr!important}.filters{top:64px!important;overflow-x:auto;grid-template-columns:minmax(180px,1fr) repeat(3,120px)!important}.grid article>img{height:170px!important}}.a>header>div>small{display:none!important}.heading>div{align-self:flex-start;text-align:left}.heading i{display:none!important}.loginintro{justify-self:start;text-align:left;padding-left:clamp(22px,5vw,72px)!important}.loginintro h2{margin-left:0!important;text-align:left!important}`;
@@ -447,7 +491,8 @@ export default function Admin() {
   const [lang, setLang] = useState(
       () => localStorage.getItem("xart-admin-language") || "zh",
     ),
-    t = C[lang];
+    t = C[lang],
+    ui = adminUI[lang];
   const [token, setToken] = useState(
       () => sessionStorage.getItem("xart-admin-token") || "",
     ),
@@ -719,6 +764,37 @@ export default function Admin() {
     window.addEventListener("keydown", full);
     return () => window.removeEventListener("keydown", full);
   }, [edit]);
+  const translateDraft = async () => {
+    const source = edit?.language || "zh",
+      titleKey = source + "_title",
+      summaryKey = source + "_summary",
+      contentKey = source + "_content";
+    if (!edit?.[titleKey]?.trim() || !edit?.[summaryKey]?.trim() || !edit?.[contentKey]?.trim()) {
+      setMsg(t.required);
+      return;
+    }
+    setBusy(true);
+    setMsg(ui.translating);
+    try {
+      const data = await api("", {
+        method: "POST",
+        body: JSON.stringify({
+          action: "translate",
+          language: source,
+          [titleKey]: edit[titleKey],
+          [summaryKey]: edit[summaryKey],
+          [contentKey]: edit[contentKey],
+        }),
+      });
+      setEdit((current) => ({ ...current, ...data }));
+      setPreviewLang(source);
+      setMsg(ui.translated);
+    } catch (error) {
+      setMsg(error.message);
+    } finally {
+      setBusy(false);
+    }
+  };
   const save = async (e, published = true) => {
     e.preventDefault();
     const l = edit.language;
@@ -735,10 +811,8 @@ export default function Admin() {
       !published
         ? t.saving
         : lang === "zh"
-        ? "正在自动翻译并发布三种语言…"
-        : lang === "fr"
-          ? "Traduction automatique en trois langues…"
-          : "Translating into three languages…",
+        ? ui.translating
+        : ui.translating,
     );
     try {
       await api("", {
@@ -760,7 +834,7 @@ export default function Admin() {
     }
   };
   const remove = async (a) => {
-    if (!confirm(`${t.confirm} “${title(a)}”?`)) return;
+    if (!confirm(`${t.confirm} “${displayTitle(a, lang)}”?`)) return;
     setBusy(true);
     try {
       await api(`?id=${a.id}`, { method: "DELETE" });
@@ -811,7 +885,7 @@ export default function Admin() {
     }
   };
   const removeArchive = async (archive) => {
-    if (!confirm(`${t.confirm} “${archive.title}”?`)) return;
+    if (!confirm(`${t.confirm} “${archiveDisplayTitle(archive, lang)}”?`)) return;
     setBusy(true);
     try {
       await archiveApi(`?id=${archive.id}`, { method: "DELETE" });
@@ -828,16 +902,13 @@ export default function Admin() {
     event.target.value = "";
     if (!file) return;
     if (file.type !== "application/pdf") {
-      setMsg("请选择 PDF 文件");
+      setMsg(t.error);
       return;
     }
     setBusy(true);
     setMsg(
       lang === "zh"
-        ? "正在提取段落并生成中、法、英三语内容…"
-        : lang === "fr"
-          ? "Extraction et traduction en trois langues…"
-          : "Extracting and translating into three languages…",
+        ui.translating,
     );
     try {
       const form = new FormData();
@@ -866,11 +937,7 @@ export default function Admin() {
       }));
       setPreviewLang(data.source || "zh");
       setMsg(
-        lang === "zh"
-          ? "PDF 已按原文段落导入，三种语言均可切换修改。"
-          : lang === "fr"
-            ? "PDF importé. Les trois langues sont modifiables."
-            : "PDF imported. All three languages are ready to edit.",
+        ui.translated,
       );
     } catch (error) {
       setMsg(error.message);
@@ -922,7 +989,7 @@ export default function Admin() {
       replaceSelection(
         `[${name}=${value}]`,
         `[/${name}]`,
-        lang === "zh" ? "选中文字" : "Selected text",
+        ui.selectedText,
       );
   };
   const prefixLines = (prefix) => {
@@ -944,12 +1011,12 @@ export default function Admin() {
     requestAnimationFrame(() => area?.focus());
   };
   const addLink = () => {
-    const url = prompt(lang === "zh" ? "输入链接地址" : "URL");
+    const url = prompt(ui.linkAddress);
     if (url)
       replaceSelection(
         "[",
         "](" + url + ")",
-        lang === "zh" ? "链接文字" : "Link text",
+        ui.linkText,
       );
   };
   const duplicate = (a) => {
@@ -971,7 +1038,7 @@ export default function Admin() {
     );
   };
   const addCategory = async () => {
-    const name = prompt(lang === "zh" ? "分类名称" : "Category name");
+    const name = prompt(ui.categoryName);
     if (!name) return;
     try {
       await categoryApi("", {
@@ -990,13 +1057,13 @@ export default function Admin() {
     }
   };
   const editCategory = async (item) => {
-    const zh = prompt("中文", item.zh_name);
+    const zh = prompt(ui.chinese, item.zh_name);
     if (zh === null) return;
-    const fr = prompt("Français", item.fr_name);
+    const fr = prompt(ui.french, item.fr_name);
     if (fr === null) return;
-    const en = prompt("English", item.en_name);
+    const en = prompt(ui.english, item.en_name);
     if (en === null) return;
-    const slug = prompt("Slug", item.slug);
+    const slug = prompt(ui.slug, item.slug);
     if (slug === null) return;
     try {
       await categoryApi("", {
@@ -1042,11 +1109,11 @@ export default function Admin() {
     event.target.value = "";
     if (!file) return;
     if (file.type !== "application/pdf") {
-      setMsg("请选择 PDF 文件");
+      setMsg(t.error);
       return;
     }
     if (file.size > 3 * 1024 * 1024) {
-      setMsg("PDF 不能超过 3MB");
+      setMsg(t.error);
       return;
     }
     setBusy(true);
@@ -1066,7 +1133,7 @@ export default function Admin() {
           data,
         }),
       });
-      setMsg("PDF 已发布到发现页");
+      setMsg(ui.translated);
       await load();
     } catch (error) {
       setMsg(error.message);
@@ -1081,13 +1148,13 @@ export default function Admin() {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-          text: (title(item) || "X-ART Lab").slice(0, 120),
+          text: (displayTitle(item, lang) || "X-ART Lab").slice(0, 120),
           language: "zh",
-          title: title(item),
+          title: displayTitle(item, lang),
         }),
       });
-      if (!response.ok) throw Error("音频服务测试失败");
-      setMsg("音频生成测试成功");
+      if (!response.ok) throw Error(t.error);
+      setMsg(ui.generated);
     } catch (error) {
       setMsg(error.message);
     } finally {
@@ -1116,11 +1183,11 @@ export default function Admin() {
             (status === "published" && item.published) ||
             (status === "draft" && !item.published)) &&
           (category === "all" || item.tag === category) &&
-          (!needle || title(item).toLowerCase().includes(needle)),
+          (!needle || displayTitle(item, lang).toLowerCase().includes(needle)),
       )
       .sort((a, b) =>
         sort === "title"
-          ? title(a).localeCompare(title(b))
+          ? displayTitle(a, lang).localeCompare(displayTitle(b, lang))
           : sort === "number"
             ? Number(b.n) - Number(a.n)
             : new Date(b.updated_at || b.created_at) -
@@ -1132,29 +1199,23 @@ export default function Admin() {
   );
   const stats = [
     {
-      label: lang === "zh" ? "已发布" : lang === "fr" ? "Publiés" : "Published",
+      label: lang === "zh" ? t.published : lang === "fr" ? t.published : t.published,
       value: items.filter((item) => item.published).length,
     },
     {
-      label: lang === "zh" ? "草稿" : lang === "fr" ? "Brouillons" : "Drafts",
+      label: t.draft,
       value: items.filter((item) => !item.published).length,
     },
     {
-      label:
-        lang === "zh" ? "分类" : lang === "fr" ? "Catégories" : "Categories",
+      label: ui.categoryManager,
       value: categories.length,
     },
     {
-      label: lang === "zh" ? "会员文章" : lang === "fr" ? "Abonnés" : "Members",
+      label: lang === "zh" ? t.member : lang === "fr" ? t.member : t.member,
       value: items.filter((item) => item.locked).length,
     },
     {
-      label:
-        lang === "zh"
-          ? "社区帖子"
-          : lang === "fr"
-            ? "Discussions"
-            : "Community",
+      label: lang === "zh" ? "社区帖子" : lang === "fr" ? "Discussions" : "Community",
       value: meta.communityPosts || 0,
     },
   ];
@@ -1286,9 +1347,9 @@ export default function Admin() {
               <div className="archive-row" key={archive.id}>
                 {archiveImage(archive) ? <img loading="lazy" decoding="async" src={archiveImage(archive)} alt="" /> : <div className="archive-thumb" />}
                 <div className="archive-row-copy">
-                  <b>{archive.title}</b>
+                  <b>{archiveDisplayTitle(archive, lang)}</b>
                   <small>{archive.published ? t.published : t.draft} · {archive.page_url}</small>
-                  {archive.summary && <span>{archive.summary}</span>}
+                  {archive.summary && <span>{archiveDisplaySummary(archive, lang)}</span>}
                 </div>
                 <div className="row-actions">
                   <button onClick={() => openArchive(archive)}>{t.edit}</button>
@@ -1309,11 +1370,7 @@ export default function Admin() {
             <Activity />
             <div>
               <small>
-                {lang === "zh"
-                  ? "服务状态"
-                  : lang === "fr"
-                    ? "Services"
-                    : "Services"}
+                {ui.serviceStatus}
               </small>
               <b>AI · PDF · AUDIO</b>
             </div>
@@ -1323,22 +1380,22 @@ export default function Admin() {
         <section className="admin-module">
           <header>
             <div>
-              <b>系统状态</b>
+              <b>{ui.statusTitle}</b>
               <small>
                 {systemStatus.checkedAt
                   ? new Date(systemStatus.checkedAt).toLocaleString()
                   : "—"}
               </small>
             </div>
-            <button onClick={load}>重新检测</button>
+            <button onClick={load}>{ui.checkAgain}</button>
           </header>
           <div className="status-grid">
             {[
-              ["database", "数据库"],
-              ["ai", "AI 模型"],
-              ["translation", "翻译服务"],
-              ["pdf", "PDF 服务"],
-              ["audio", "音频服务"],
+              ["database", ui.database],
+              ["ai", ui.aiModel],
+              ["translation", ui.translationService],
+              ["pdf", ui.pdfService],
+              ["audio", ui.audioService],
             ].map(([key, label]) => (
               <div
                 key={key}
@@ -1362,11 +1419,11 @@ export default function Admin() {
         <section className="admin-module">
           <header>
             <div>
-              <b>文件与下载管理</b>
-              <small>检查 PDF、音频与手机端下载</small>
+              <b>{ui.filesTitle}</b>
+              <small>{ui.filesIntro}</small>
             </div>
             <label className="admin-upload">
-              上传 PDF 到发现页
+              {ui.uploadPdf}
               <input
                 type="file"
                 accept="application/pdf"
@@ -1377,20 +1434,15 @@ export default function Admin() {
           <div className="file-table">
             {items.map((item) => (
               <div className="file-row" key={item.id}>
-                <b>{title(item)}</b>
-                <span>PDF · {item.has_pdf ? "已上传" : "可生成"}</span>
+                <b>{displayTitle(item, lang)}</b>
+                <span>PDF · {item.has_pdf ? ui.uploaded : ui.ready}</span>
                 <span>
-                  音频 ·{" "}
-                  {item.audio_generated
-                    ? "已生成"
-                    : systemStatus.services?.audio
-                      ? "可生成"
-                      : "不可用"}
+                  {ui.audio} · {item.audio_generated ? ui.generated : systemStatus.services?.audio ? ui.ready : ui.unavailable}
                 </span>
                 <span>
                   {item.pdf_size
                     ? (item.pdf_size / 1024 / 1024).toFixed(2) + " MB"
-                    : "动态生成"}
+                    : ui.dynamic}
                 </span>
                 <div className="row-actions">
                   {item.has_pdf && (
@@ -1399,13 +1451,13 @@ export default function Admin() {
                       target="_blank"
                       rel="noreferrer"
                     >
-                      <button>下载测试</button>
+                      <button>{ui.downloadTest}</button>
                     </a>
                   )}
-                  <button onClick={() => setMsg("PDF 将在下次下载时重新生成")}>
-                    重新生成 PDF
+                  <button onClick={() => setMsg(ui.pdfWillRegenerate)}>
+                    {ui.regeneratePdf}
                   </button>
-                  <button onClick={() => testAudio(item)}>重新生成音频</button>
+                  <button onClick={() => testAudio(item)}>{ui.regenerateAudio}</button>
                 </div>
               </div>
             ))}
@@ -1414,18 +1466,18 @@ export default function Admin() {
         <section className="admin-module">
           <header>
             <div>
-              <b>社区管理</b>
-              <small>帖子、回复、推荐与举报审核</small>
+              <b>{ui.communityTitle}</b>
+              <small>{ui.communityIntro}</small>
             </div>
             <div className="moderation-tools">
               <select
                 value={communityLanguage}
                 onChange={(event) => setCommunityLanguage(event.target.value)}
               >
-                <option value="all">全部语言</option>
-                <option value="zh">中文</option>
-                <option value="fr">Français</option>
-                <option value="en">English</option>
+                <option value="all">{ui.allLanguages}</option>
+                <option value="zh">{ui.chinese}</option>
+                <option value="fr">{ui.french}</option>
+                <option value="en">{ui.english}</option>
               </select>
             </div>
           </header>
@@ -1439,21 +1491,21 @@ export default function Admin() {
                 <span>
                   {item.language} · {item.type}
                 </span>
-                <span>{item.hidden ? "已隐藏" : "显示中"}</span>
+                <span>{item.hidden ? ui.hidden : ui.visible}</span>
                 <span>
                   {item.reported
-                    ? "被举报"
+                    ? ui.reported
                     : item.recommended
-                      ? "推荐"
-                      : "普通"}
+                      ? ui.recommended
+                      : ui.ordinary}
                 </span>
                 <div className="row-actions">
                   <button onClick={() => moderate(item, "hide", !item.hidden)}>
-                    {item.hidden ? "恢复" : "隐藏"}
+                    {item.hidden ? ui.restore : ui.hide}
                   </button>
                   {!item.parent_id && (
                     <button onClick={() => moderate(item, "pin", !item.pinned)}>
-                      {item.pinned ? "取消置顶" : "置顶"}
+                      {item.pinned ? ui.unpin : ui.pin}
                     </button>
                   )}
                   <button
@@ -1461,15 +1513,15 @@ export default function Admin() {
                       moderate(item, "recommend", !item.recommended)
                     }
                   >
-                    {item.recommended ? "取消推荐" : "推荐"}
+                    {item.recommended ? ui.unrecommend : ui.recommend}
                   </button>
                   <button
                     className="danger"
                     onClick={() =>
-                      confirm("确定删除？") && moderate(item, "delete")
+                      confirm(ui.deleteConfirm) && moderate(item, "delete")
                     }
                   >
-                    删除
+                    {t.del}
                   </button>
                 </div>
               </div>
@@ -1481,16 +1533,14 @@ export default function Admin() {
             <div>
               <b>
                 {lang === "zh"
-                  ? "分类管理"
-                  : lang === "fr"
-                    ? "Catégories"
-                    : "Categories"}
+                  ? ui.categoryManager
+                  : ui.categoryManager}
               </b>
               <small>{managedCategories.length}</small>
             </div>
             <button onClick={addCategory}>
               <Plus size={12} />
-              {lang === "zh" ? "新建分类" : "Add"}
+              {ui.addCategory}
             </button>
           </header>
           <div className="category-list">
@@ -1521,16 +1571,13 @@ export default function Admin() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={
                 lang === "zh"
-                  ? "搜索标题"
-                  : lang === "fr"
-                    ? "Rechercher"
-                    : "Search titles"
+                  {ui.searchTitle}
               }
             />
           </label>
           <select value={status} onChange={(e) => setStatus(e.target.value)}>
             <option value="all">
-              {lang === "zh" ? "全部状态" : "All status"}
+              {ui.allStatus}
             </option>
             <option value="published">{t.published}</option>
             <option value="draft">{t.draft}</option>
@@ -1540,7 +1587,7 @@ export default function Admin() {
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="all">
-              {lang === "zh" ? "全部分类" : "All categories"}
+              {ui.allCategories}
             </option>
             {categories.map((value) => (
               <option key={value}>{value}</option>
@@ -1548,12 +1595,12 @@ export default function Admin() {
           </select>
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="updated">
-              {lang === "zh" ? "最近更新" : "Recently updated"}
+              {ui.recentlyUpdated}
             </option>
             <option value="number">
-              {lang === "zh" ? "文章编号" : "Number"}
+              {ui.articleNumber}
             </option>
-            <option value="title">{lang === "zh" ? "标题" : "Title"}</option>
+            <option value="title">{ui.sortTitle}</option>
           </select>
         </section>
         <div className="grid">
@@ -1567,12 +1614,12 @@ export default function Admin() {
                   </b>
                   <span>{a.published ? t.published : t.draft}</span>
                 </div>
-                <h2>{title(a)}</h2>
+                <h2>{displayTitle(a, lang)}</h2>
                 <p>
                   {a.locked ? t.member : t.free} · {a.minutes} {t.min}
                 </p>
                 <time>
-                  {lang === "zh" ? "更新于" : "Updated"}{" "}
+                  {ui.updatedAt}{" "}
                   {new Date(a.updated_at || a.created_at).toLocaleDateString()}
                 </time>
                 <div className="actions">
@@ -1582,7 +1629,7 @@ export default function Admin() {
                   </button>
                   <button onClick={() => duplicate(a)}>
                     <Copy size={14} />
-                    {lang === "zh" ? "复制" : "Copy"}
+                    {ui.copy}
                   </button>
                   <button className="danger" onClick={() => remove(a)}>
                     <Trash2 size={14} />
@@ -1613,11 +1660,7 @@ export default function Admin() {
                     else modal?.requestFullscreen();
                   }}
                 >
-                  {lang === "zh"
-                    ? "全屏"
-                    : lang === "fr"
-                      ? "Plein écran"
-                      : "Fullscreen"}
+                  {ui.fullscreen}
                 </button>
                 <button
                   type="button"
@@ -1650,18 +1693,10 @@ export default function Admin() {
                 <FileText size={17} />
                 <span>
                   <b>
-                    {lang === "zh"
-                      ? "从 PDF 自动生成文章"
-                      : lang === "fr"
-                        ? "Créer depuis un PDF"
-                        : "Generate from PDF"}
+                    {ui.generateFromPdf}
                   </b>
                   <small>
-                    {lang === "zh"
-                      ? "保留原文段落，自动生成中文、法语和英文"
-                      : lang === "fr"
-                        ? "Paragraphes conservés · chinois, français et anglais"
-                        : "Preserve paragraphs · Chinese, French and English"}
+                    {ui.pdfHelp}
                   </small>
                 </span>
                 <input
@@ -1671,6 +1706,12 @@ export default function Admin() {
                   disabled={busy}
                 />
               </label>
+              <div className="translation-tools">
+                <button type="button" disabled={busy} onClick={translateDraft}>
+                  {busy ? t.saving : ui.translateAll}
+                </button>
+                <small>{ui.translateHelp}</small>
+              </div>
             </section>
             <div className="formgrid">
               <label>
@@ -1689,11 +1730,7 @@ export default function Admin() {
                   required
                 >
                   <option value="">
-                    {lang === "zh"
-                      ? "选择分类"
-                      : lang === "fr"
-                        ? "Choisir une catégorie"
-                        : "Choose category"}
+                    {ui.chooseCategory}
                   </option>
                   {managedCategories.map((item) => (
                     <option key={item.id} value={item.slug}>
@@ -1775,23 +1812,23 @@ export default function Admin() {
                 <div className="editorbar">
                   <select
                     defaultValue=""
-                    title="Font"
+                    title={ui.font}
                     onChange={(e) => {
                       applyStyle("font", e.target.value);
                       e.target.value = "";
                     }}
                   >
                     <option value="" disabled>
-                      字体
+                      {ui.font}
                     </option>
-                    <option value="sans">无衬线</option>
+                    <option value="sans">{ui.fontSans}</option>
                     <option value="helvetica">Helvetica</option>
-                    <option value="serif">衬线</option>
+                    <option value="serif">{ui.fontSerif}</option>
                     <option value="times">Times New Roman</option>
-                    <option value="song">宋体 / Songti</option>
-                    <option value="kai">楷体 / Kaiti</option>
-                    <option value="hei">黑体 / Heiti</option>
-                    <option value="mono">等宽</option>
+                    <option value="song">{ui.fontSong}</option>
+                    <option value="kai">{ui.fontKaiti}</option>
+                    <option value="hei">{ui.fontHeiti}</option>
+                    <option value="mono">{ui.fontMono}</option>
                   </select>
                   <select
                     defaultValue=""
@@ -1802,7 +1839,7 @@ export default function Admin() {
                     }}
                   >
                     <option value="" disabled>
-                      字号
+                      {ui.fontSize}
                     </option>
                     {[12, 14, 16, 18, 24, 32].map((size) => (
                       <option key={size} value={size}>
@@ -1810,7 +1847,7 @@ export default function Admin() {
                       </option>
                     ))}
                   </select>
-                  <label className="colorpick" title="文字颜色">
+                  <label className="colorpick" title={ui.textColor}>
                     A
                     <input
                       type="color"
@@ -1818,7 +1855,7 @@ export default function Admin() {
                       onChange={(e) => applyStyle("color", e.target.value)}
                     />
                   </label>
-                  <label className="colorpick bg" title="背景颜色">
+                  <label className="colorpick bg" title={ui.bgColor}>
                     A
                     <input
                       type="color"
@@ -1890,11 +1927,7 @@ export default function Admin() {
                 <textarea
                   ref={bodyRef}
                   rows="14"
-                  aria-label={
-                    lang === "zh"
-                      ? "可拖入图片的正文编辑器"
-                      : "Article editor with image drop"
-                  }
+                  aria-label={ui.bodyEditor}
                   value={editorText}
                   onChange={(e) =>
                     set(`${edit.language}_content`, e.target.value)
@@ -1903,17 +1936,9 @@ export default function Admin() {
                 />
                 <span className="editorstats">
                   {wordCount}{" "}
-                  {lang === "zh"
-                    ? "字符"
-                    : lang === "fr"
-                      ? "caractères"
-                      : "characters"}{" "}
+                  {ui.chars}{" "}
                   · {imageCount}{" "}
-                  {lang === "zh"
-                    ? "张图片"
-                    : lang === "fr"
-                      ? "images"
-                      : "images"}
+                  {ui.images}
                 </span>
               </label>
               <label className="upload">
