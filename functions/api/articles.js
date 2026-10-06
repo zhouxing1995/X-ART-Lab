@@ -51,7 +51,7 @@ async function translateRich(ai,text,source,target){
   }
   if(batch)batches.push(batch);
   const translated=[];
-  
+  for(const item of batches)translated.push(await translatePlain(ai,item,source,target));
   return translated.join("").replace(/XARTTOKEN\s*(\d+)\s*ENDTOKEN/gi,(_,index)=>protectedParts[Number(index)]||"");
 }
 
