@@ -106,6 +106,19 @@ export async function onRequestPost({request,env}){
   if(!env.DB)return json({error:"数据库尚未绑定"},503);
   await initialize(env.DB);
   const body=await request.json();
+  if(body.action==="translate"){
+    const source=body.language;
+    if(!["zh","fr","en"].includes(source))return json({error:"Unsupported source language"},400);
+    for(const field of ["title","summary","content"])if(!String(body[source+"_"+field]||"").trim())return json({error:"Missing source content"},400);
+    if(!env.AI)return json({error:"Translation service unavailable"},503);
+    const translated={...body};
+    try{
+      await translateArticle(env.AI,translated);
+      return json({ok:true,language:"all",zh_title:translated.zh_title,zh_summary:translated.zh_summary,zh_content:translated.zh_content,fr_title:translated.fr_title,fr_summary:translated.fr_summary,fr_content:translated.fr_content,en_title:translated.en_title,en_summary:translated.en_summary,en_content:translated.en_content});
+    }catch(error){
+      return json({error:"Translation failed",detail:String(error?.message||"")},502);
+    }
+  }
   if(body.action==="upload_pdf"){
     const name=String(body.name||"document.pdf").replace(/[<>]/g,"").slice(0,160),data=String(body.data||"").replace(/^data:application\/pdf;base64,/,""),size=Number(body.size)||0;
     if(!data||size<1)return json({error:"请选择 PDF 文件"},400);if(size>3*1024*1024)return json({error:"PDF 不能超过 3MB"},413);
