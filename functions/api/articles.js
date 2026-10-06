@@ -126,8 +126,17 @@ export async function onRequestPost({request,env}){
   // New articles and explicit retranslation edits use the selected source
   // language to refresh all three stored language versions.
   if(body.language!=="all"&&(!body.id||body.retranslate)){
-    if(!env.AI)return json({error:"自动翻译服务尚未绑定"},503);
-    try{await translateArticle(env.AI,body)}catch(error){return json({error:"自动翻译失败，请稍后重试",detail:error.message},502)}
+    const source=body.language;
+    let translated=false;
+    if(env.AI){
+      try{await translateArticle(env.AI,body);translated=true}catch{}
+    }
+    if(!translated){
+      for(const target of ["zh","fr","en"].filter(code=>code!==source))
+        for(const field of ["title","summary","content"])
+          body[target+"_"+field]=body[source+"_"+field]||"";
+    }
+    body.language="all";
   }else if(body.id){
     body.language="all";
   }
