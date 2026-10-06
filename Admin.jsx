@@ -906,10 +906,7 @@ export default function Admin() {
       return;
     }
     setBusy(true);
-    setMsg(
-      lang === "zh"
-        ui.translating,
-    );
+    setMsg(ui.translating);
     try {
       const form = new FormData();
       form.append("file", file);
@@ -1569,10 +1566,7 @@ export default function Admin() {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder={
-                lang === "zh"
-                  {ui.searchTitle}
-              }
+              placeholder={ui.searchTitle}
             />
           </label>
           <select value={status} onChange={(e) => setStatus(e.target.value)}>
