@@ -1521,7 +1521,7 @@ export default function Admin() {
                       confirm(ui.deleteConfirm) && moderate(item, "delete")
                     }
                   >
-                    {ui.del}
+                    {t.del}
                   </button>
                 </div>
               </div>
