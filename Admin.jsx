@@ -289,7 +289,7 @@ const compress = (file) =>
         c.width = Math.round(i.width * s);
         c.height = Math.round(i.height * s);
         c.getContext("2d").drawImage(i, 0, 0, c.width, c.height);
-        ok(c.toDataURL("image/jpeg", 0.8));
+        ok(c.toDataURL("image/webp", 0.82));
       };
       i.src = r.result;
     };
