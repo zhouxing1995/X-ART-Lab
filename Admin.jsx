@@ -504,6 +504,7 @@ export default function Admin() {
     [pass, setPass] = useState(""),
     [items, setItems] = useState([]),
     [archives, setArchives] = useState([]),
+    [members, setMembers] = useState([]),
     [meta, setMeta] = useState({ communityPosts: 0, services: {} }),
     [managedCategories, setManagedCategories] = useState([]),
     [communityPosts, setCommunityPosts] = useState([]),
@@ -580,6 +581,19 @@ export default function Admin() {
       d = await r.json().catch(() => ({}));
     if (!r.ok) throw Error(d.error || t.error);
     return d;
+  };  const memberApi = async (path = "", opt = {}) => {
+    const r = await fetch(`/api/members${path}`, {
+        cache: "no-store",
+        ...opt,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          ...opt.headers,
+        },
+      }),
+      d = await r.json().catch(() => ({}));
+    if (!r.ok) throw Error(d.error || t.error);
+    return d;
   };
   const adminApi = async (endpoint, opt = {}) => {
     const r = await fetch(`/api/${endpoint}`, {
@@ -598,15 +612,15 @@ export default function Admin() {
   const load = async () => {
     setBusy(true);
     try {
-      const [data, cats, archiveData, community, system] = await Promise.all([
+      const [data, cats, archiveData, memberData, community, system] = await Promise.all([
         api(`?all=1&t=${Date.now()}`),
-        categoryApi(`?t=${Date.now()}`),
-        archiveApi(`?all=1&t=${Date.now()}`),
+        categoryApi(`?t=${Date.now()}`),        archiveApi(`?all=1&t=${Date.now()}`),
+        memberApi(`?all=1&t=${Date.now()}`),
         adminApi(`community-admin?t=${Date.now()}`),
         adminApi(`system-status?t=${Date.now()}`),
       ]);
-      setItems(data.articles);
-      setArchives(archiveData.archives || []);
+      setItems(data.articles);      setArchives(archiveData.archives || []);
+      setMembers(memberData.members || []);
       setMeta(data.meta || { communityPosts: 0, services: {} });
       setManagedCategories(cats.categories || []);
       setCommunityPosts(community.posts || []);
@@ -895,6 +909,25 @@ export default function Admin() {
     try {
       await archiveApi(`?id=${archive.id}`, { method: "DELETE" });
       setMsg(t.deleted);
+      await load();
+    } catch (error) {
+      setMsg(error.message);
+    } finally {
+      setBusy(false);
+    }
+  };  const addMember = async () => {
+    const email = prompt(t.memberEmail);
+    if (!email?.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setMsg(t.memberRequired);
+      return;
+    }
+    setBusy(true);
+    try {
+      await memberApi("", {
+        method: "POST",
+        body: JSON.stringify({ email: email.trim(), plan: "yearly", active: true, expires_at: "" }),
+      });
+      setMsg(t.memberSaved);
       await load();
     } catch (error) {
       setMsg(error.message);
@@ -1359,6 +1392,28 @@ export default function Admin() {
                 </div>
               </div>
             )) : <p className="archive-empty">{t.archiveEmpty}</p>}
+          </div>
+        </section>
+        <section className="admin-module member-manager">
+          <header>
+            <div>
+              <b>{t.members}</b>
+              <small>{t.membersIntro}</small>
+            </div>
+            <button className="primary" onClick={addMember}>
+              <Plus size={13} />
+              {t.addMember}
+            </button>
+          </header>
+          <div className="archive-table">
+            {members.length ? members.map((member) => (
+              <div className="archive-row" key={member.email}>
+                <div className="archive-row-copy">
+                  <b>{member.email}</b>
+                  <small>{member.plan === "custom" ? t.memberCustom : t.memberYearly} · {member.access ? t.memberActive : t.memberInactive}{member.expires_at ? ` · ${member.expires_at}` : ""}</small>
+                </div>
+              </div>
+            )) : <p className="archive-empty">{t.memberEmpty}</p>}
           </div>
         </section>
         <section className="dashboard">
