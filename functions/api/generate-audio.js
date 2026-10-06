@@ -15,10 +15,20 @@ async function audioBytes(result){
   throw Error("Unsupported audio response");
 }
 
-async function synthesize(ai,chunk,language){
+async function synthesizeMelo(ai,chunk,language){
   let lastError;
   for(let attempt=0;attempt<3;attempt++)try{return await audioBytes(await ai.run("@cf/myshell-ai/melotts",{prompt:chunk,lang:language},{returnRawResponse:true}))}catch(error){lastError=error}
   throw lastError;
+}
+
+async function synthesizeEnglish(ai,chunk){
+  let lastError;
+  for(let attempt=0;attempt<2;attempt++)try{return await audioBytes(await ai.run("@cf/deepgram/aura-2-en",{text:chunk,speaker:"luna",encoding:"mp3"},{returnRawResponse:true}))}catch(error){lastError=error}
+  try{return await synthesizeMelo(ai,chunk,"en")}catch(error){throw lastError||error}
+}
+
+async function synthesize(ai,chunk,language){
+  return language==="en"?synthesizeEnglish(ai,chunk):synthesizeMelo(ai,chunk,language);
 }
 
 export async function onRequestPost({request,env}){
