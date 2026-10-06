@@ -20,7 +20,8 @@ export async function onRequestGet({env}){
   const {results}=await env.DB.prepare("SELECT * FROM community_posts WHERE hidden=0 ORDER BY pinned DESC,recommended DESC,created_at DESC,id DESC LIMIT 200").all();
   const replies=new Map(),posts=[];
   for(const post of results){if(post.parent_id){if(!replies.has(post.parent_id))replies.set(post.parent_id,[]);replies.get(post.parent_id).push(post)}else posts.push(post)}
-  return json({posts:posts.slice(0,60).map(post=>({...post,replies:(replies.get(post.id)||[]).reverse()}))});
+  const safePost=post=>({...post,image:normalizeImage(post.image),avatar:normalizeImage(post.avatar),replies:(replies.get(post.id)||[]).reverse().map(reply=>({...reply,image:normalizeImage(reply.image),avatar:normalizeImage(reply.avatar)}))});
+  return json({posts:posts.slice(0,60).map(safePost)});
 }
 
 export async function onRequestPost({request,env}){
