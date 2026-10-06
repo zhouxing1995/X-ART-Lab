@@ -1374,13 +1374,13 @@ export default function Admin() {
             )) : <p className="archive-empty">{t.archiveEmpty}</p>}
           </div>
         </section>
-        <>
+        <section className="admin-module member-manager">
           <header>
             <div>
               <b>{t.members}</b>
               <small>{t.membersIntro}</small>
             </div>
-            <button className="primary" onClick={addMember}>
+            <input type="email" value={memberEmail} onChange={(e) => setMemberEmail(e.target.value)} placeholder={t.memberEmail} /><button type="button" className="primary" onClick={saveMember} disabled={busy}>
               <Plus size={13} />
               {t.addMember}
             </button>
