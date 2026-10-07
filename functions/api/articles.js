@@ -110,8 +110,14 @@ export async function onRequestGet({request,env}){
     if(!row)return json({error:"Article not found"},404);
     const article={...row,locked:Boolean(row.locked),published:Boolean(row.published)};
     for(const code of ["zh","fr","en"])article[code+"_content"]=stripEditorialNote(article[code+"_content"]);
-    const source=["zh","fr","en"].find(code=>String(article[code+"_title"]||"").trim()&&String(article[code+"_content"]||"").trim())||article.language||"zh";
-    if(requestedLanguage!==source&&!String(article[requestedLanguage+"_title"]||"").trim()&&!String(article[requestedLanguage+"_content"]||"").trim()){
+    const storedLanguage=["zh","fr","en"].includes(article.language)?article.language:"";
+    const source=storedLanguage||["zh","fr","en"].find(code=>String(article[code+"_title"]||"").trim()&&String(article[code+"_content"]||"").trim())||"zh";
+    const sourceTitle=String(article[source+"_title"]||"").trim();
+    const sourceContent=String(article[source+"_content"]||"").trim();
+    const targetTitle=String(article[requestedLanguage+"_title"]||"").trim();
+    const targetContent=String(article[requestedLanguage+"_content"]||"").trim();
+    const targetIsSourceCopy=Boolean(targetTitle&&targetContent&&targetTitle===sourceTitle&&targetContent===sourceContent);
+    if(requestedLanguage!==source&&((!targetTitle&&!targetContent)||targetIsSourceCopy)){
       if(!env.AI)return json({error:"Translation service unavailable"},503);
       try{
         await translateOne(env.AI,article,source,requestedLanguage);
