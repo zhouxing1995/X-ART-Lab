@@ -21,6 +21,7 @@ import {
   Quote,
   Search,
   Trash2,
+  Users,
   X,
 } from "lucide-react";
 
@@ -59,7 +60,6 @@ const blankArchive = {
   summary: "",
   page_url: "",
 };
-
 const archiveImage = (archive) => {
   const supplied = String(archive?.cover_image || "").trim();
   const identity = String(archive?.title || "") + " " + String(archive?.page_url || "");
@@ -134,7 +134,7 @@ const C = {
     archiveCover: "档案封面",
     saveArchive: "保存档案",
     archiveSaved: "艺术家档案已保存",
-    archiveRequired: "请填写名称和网页链接。", members: "订阅用户", membersIntro: "按邮箱授予年度会员或定制客户访问权限。", addMember: "添加订阅用户", memberEmpty: "还没有订阅用户", memberEmail: "用户邮箱", memberPlan: "权限类型", memberYearly: "年度会员", memberCustom: "定制客户", memberActive: "已开通", memberInactive: "已停用", memberExpires: "到期时间（可选）", saveMember: "保存权限", memberSaved: "订阅用户权限已保存", memberRequired: "请填写有效的邮箱地址。",
+    archiveRequired: "请填写名称和网页链接。", members: "订阅用户", membersIntro: "按邮箱授予年度会员或定制客户访问权限。", addMember: "添加订阅用户", memberEmpty: "还没有订阅用户", memberEmail: "用户邮箱", memberPlan: "权限类型", memberYearly: "年度会员", memberCustom: "定制客户", memberActive: "已开通", memberInactive: "已停用", memberExpires: "到期时间（可选）", saveMember: "保存权限", memberSaved: "订阅用户权限已保存", memberRequired: "请填写有效的邮箱地址。", users: "用户管理", usersIntro: "查看注册用户、登录状态与订阅档案权限。", registeredUsers: "注册用户", activeAccess: "已开通访问", noUsers: "还没有注册用户", usersUnavailable: "暂时无法读取认证用户列表，请检查 Supabase 管理密钥。", userName: "显示名称", userEmail: "邮箱", joinedAt: "注册时间", lastSeen: "最近登录", userAccess: "档案权限", userActions: "操作", manageAccess: "管理权限", noAccess: "未开通", userActive: "可访问", userPending: "待确认", memberRecords: "权限记录", contentManagement: "内容管理",
   },
   fr: {
     admin: "Administration des articles",
@@ -198,7 +198,7 @@ const C = {
     archiveCover: "Couverture",
     saveArchive: "Enregistrer l’archive",
     archiveSaved: "Archive enregistrée",
-    archiveRequired: "Renseignez le nom et l’URL.", members: "Utilisateurs abonnés", membersIntro: "Accordez l’accès annuel ou client personnalisé par e-mail.", addMember: "Ajouter un abonné", memberEmpty: "Aucun abonné", memberEmail: "E-mail de l’utilisateur", memberPlan: "Type d’accès", memberYearly: "Membre annuel", memberCustom: "Client personnalisé", memberActive: "Actif", memberInactive: "Désactivé", memberExpires: "Expiration (facultatif)", saveMember: "Enregistrer l’accès", memberSaved: "Accès de l’abonné enregistré", memberRequired: "Saisissez une adresse e-mail valide.",
+    archiveRequired: "Renseignez le nom et l’URL.", members: "Utilisateurs abonnés", membersIntro: "Accordez l’accès annuel ou client personnalisé par e-mail.", addMember: "Ajouter un abonné", memberEmpty: "Aucun abonné", memberEmail: "E-mail de l’utilisateur", memberPlan: "Type d’accès", memberYearly: "Membre annuel", memberCustom: "Client personnalisé", memberActive: "Actif", memberInactive: "Désactivé", memberExpires: "Expiration (facultatif)", saveMember: "Enregistrer l’accès", memberSaved: "Accès de l’abonné enregistré", memberRequired: "Saisissez une adresse e-mail valide.", users: "Utilisateurs", usersIntro: "Voir les comptes inscrits, les connexions et les accès aux archives.", registeredUsers: "Comptes inscrits", activeAccess: "Accès actifs", noUsers: "Aucun compte inscrit", usersUnavailable: "La liste des comptes n’est pas disponible. Vérifiez la clé d’administration Supabase.", userName: "Nom d’affichage", userEmail: "E-mail", joinedAt: "Inscription", lastSeen: "Dernière connexion", userAccess: "Accès aux archives", userActions: "Actions", manageAccess: "Gérer l’accès", noAccess: "Sans accès", userActive: "Accès actif", userPending: "E-mail à confirmer", memberRecords: "Droits enregistrés", contentManagement: "Contenu",
   },
   en: {
     admin: "Article admin",
@@ -261,7 +261,7 @@ const C = {
     archiveCover: "Archive cover",
     saveArchive: "Save archive",
     archiveSaved: "Artist archive saved",
-    archiveRequired: "Complete the name and URL.", members: "Subscriber access", membersIntro: "Grant annual-member or custom-client access by email.", addMember: "Add subscriber", memberEmpty: "No subscribers yet", memberEmail: "User email", memberPlan: "Access type", memberYearly: "Annual member", memberCustom: "Custom client", memberActive: "Active", memberInactive: "Disabled", memberExpires: "Expiry (optional)", saveMember: "Save access", memberSaved: "Subscriber access saved", memberRequired: "Enter a valid email address.",
+    archiveRequired: "Complete the name and URL.", members: "Subscriber access", membersIntro: "Grant annual-member or custom-client access by email.", addMember: "Add subscriber", memberEmpty: "No subscribers yet", memberEmail: "User email", memberPlan: "Access type", memberYearly: "Annual member", memberCustom: "Custom client", memberActive: "Active", memberInactive: "Disabled", memberExpires: "Expiry (optional)", saveMember: "Save access", memberSaved: "Subscriber access saved", memberRequired: "Enter a valid email address.", users: "User management", usersIntro: "View registered users, sign-ins, and archive access.", registeredUsers: "Registered users", activeAccess: "Active access", noUsers: "No registered users yet", usersUnavailable: "Registered users are unavailable. Check the Supabase admin key.", userName: "Display name", userEmail: "Email", joinedAt: "Registered", lastSeen: "Last sign-in", userAccess: "Archive access", userActions: "Actions", manageAccess: "Manage access", noAccess: "No access", userActive: "Access active", userPending: "Email pending", memberRecords: "Permission records", contentManagement: "Content",
   },
 };
 
@@ -271,7 +271,7 @@ const adminUI = {
     filesTitle: "文件与下载管理", filesIntro: "检查 PDF、音频与手机端下载", uploadPdf: "上传 PDF 到发现页", uploaded: "已上传", ready: "可生成", audio: "音频", generated: "已生成", unavailable: "不可用", dynamic: "动态生成", downloadTest: "下载测试", regeneratePdf: "重新生成 PDF", regenerateAudio: "重新生成音频", pdfWillRegenerate: "PDF 将在下次下载时重新生成",
     communityTitle: "社区管理", communityIntro: "帖子、回复、推荐与举报审核", allLanguages: "全部语言", hidden: "已隐藏", visible: "显示中", reported: "被举报", recommended: "推荐", ordinary: "普通", restore: "恢复", hide: "隐藏", unpin: "取消置顶", pin: "置顶", unrecommend: "取消推荐", recommend: "推荐", deleteConfirm: "确定删除？",
     categoryManager: "分类管理", addCategory: "新建分类", categoryName: "分类名称", chooseCategory: "选择分类", searchTitle: "搜索标题", allStatus: "全部状态", allCategories: "全部分类", recentlyUpdated: "最近更新", articleNumber: "文章编号", sortTitle: "标题", updatedAt: "更新于", copy: "复制", fullscreen: "全屏",
-    generateFromPdf: "从 PDF 自动生成文章", pdfHelp: "保留原文段落；前台切换语言时按需生成并缓存。", translateAll: "预览翻译（可选）", translateHelp: "只需填写一种语言；前台切换语言时自动生成并缓存。", translating: "正在生成所需语言…", translated: "前台语言切换会自动生成并缓存，可随时编辑。", translationPending: "翻译待生成",
+    generateFromPdf: "从 PDF 自动生成文章", pdfHelp: "保留原文段落，自动生成中文、法语和英文", translateAll: "自动生成另外两种语言", translateHelp: "只需填写当前语言；点击后自动生成中文、法语和英文。", translating: "正在生成另外两种语言…", translated: "三种语言已生成，可分别切换修改。", translationPending: "翻译待生成",
     serviceStatus: "服务状态", archiveSuffix: "艺术家档案", font: "字体", fontSize: "字号", fontSans: "无衬线", fontSerif: "衬线", fontSong: "宋体 / Songti", fontKaiti: "楷体 / Kaiti", fontHeiti: "黑体 / Heiti", fontMono: "等宽", textColor: "文字颜色", bgColor: "背景颜色", selectedText: "选中文字", linkAddress: "输入链接地址", linkText: "链接文字", bodyEditor: "可拖入图片的正文编辑器", chars: "字符", images: "张图片", chinese: "中文", french: "Français", english: "English", slug: "Slug",
     archiveHoSummary: "中英法三语艺术家档案、作品时间线、东京重点个展、作品资料与研究来源。", archivePhilippeSummary: "独立艺术家网页档案：艺术家简介、展览时间线、Noor、图录、机构档案、研究文章与艺术理论。",
   },
@@ -280,7 +280,7 @@ const adminUI = {
     filesTitle: "Fichiers et téléchargements", filesIntro: "Vérifier les PDF, l’audio et les téléchargements mobiles", uploadPdf: "Téléverser un PDF dans Découvrir", uploaded: "Téléversé", ready: "Disponible", audio: "Audio", generated: "Généré", unavailable: "Indisponible", dynamic: "Généré à la demande", downloadTest: "Tester le téléchargement", regeneratePdf: "Régénérer le PDF", regenerateAudio: "Régénérer l’audio", pdfWillRegenerate: "Le PDF sera régénéré au prochain téléchargement",
     communityTitle: "Gestion de la communauté", communityIntro: "Modérer les publications, réponses, recommandations et signalements", allLanguages: "Toutes les langues", hidden: "Masqué", visible: "Visible", reported: "Signalé", recommended: "Recommandé", ordinary: "Standard", restore: "Restaurer", hide: "Masquer", unpin: "Retirer de la une", pin: "Épingler", unrecommend: "Retirer la recommandation", recommend: "Recommander", deleteConfirm: "Supprimer ?",
     categoryManager: "Gestion des catégories", addCategory: "Nouvelle catégorie", categoryName: "Nom de la catégorie", chooseCategory: "Choisir une catégorie", searchTitle: "Rechercher un titre", allStatus: "Tous les statuts", allCategories: "Toutes les catégories", recentlyUpdated: "Dernière mise à jour", articleNumber: "Numéro de l’article", sortTitle: "Titre", updatedAt: "Mis à jour le", copy: "Copier", fullscreen: "Plein écran",
-    generateFromPdf: "Créer depuis un PDF", pdfHelp: "Conserver les paragraphes · les autres langues sont générées à la demande", translateAll: "Aperçu de traduction (facultatif)", translateHelp: "Renseignez une seule langue ; les autres langues sont générées et mises en cache à la demande.", translating: "Génération de la langue demandée…", translated: "Les langues demandées sont générées à la demande et restent modifiables.", translationPending: "Traduction à générer",
+    generateFromPdf: "Créer depuis un PDF", pdfHelp: "Conserver les paragraphes · générer chinois, français et anglais", translateAll: "Générer les deux autres langues", translateHelp: "Renseignez une seule langue ; les trois versions seront générées automatiquement.", translating: "Génération des deux autres langues…", translated: "Les trois langues sont prêtes et restent modifiables.", translationPending: "Traduction à générer",
     serviceStatus: "État des services", archiveSuffix: "Archive d’artiste", font: "Police", fontSize: "Taille", fontSans: "Sans serif", fontSerif: "Serif", fontSong: "Songti", fontKaiti: "Kaiti", fontHeiti: "Heiti", fontMono: "Monospace", textColor: "Couleur du texte", bgColor: "Couleur de fond", selectedText: "Texte sélectionné", linkAddress: "Adresse du lien", linkText: "Texte du lien", bodyEditor: "Éditeur avec dépôt d’images", chars: "caractères", images: "images", chinese: "Chinois", french: "Français", english: "Anglais", slug: "Slug",
     archiveHoSummary: "Archive trilingue de l’artiste, chronologie des œuvres, expositions majeures à Tokyo, documents et sources de recherche.", archivePhilippeSummary: "Archive web indépendante : biographie, chronologie des expositions, Noor, catalogues, archives institutionnelles et théorie de l’art.",
   },
@@ -289,7 +289,7 @@ const adminUI = {
     filesTitle: "Files and downloads", filesIntro: "Check PDFs, audio, and mobile downloads", uploadPdf: "Upload PDF to Discover", uploaded: "Uploaded", ready: "Ready", audio: "Audio", generated: "Generated", unavailable: "Unavailable", dynamic: "Generated on demand", downloadTest: "Test download", regeneratePdf: "Regenerate PDF", regenerateAudio: "Regenerate audio", pdfWillRegenerate: "The PDF will be regenerated on the next download",
     communityTitle: "Community management", communityIntro: "Review posts, replies, recommendations, and reports", allLanguages: "All languages", hidden: "Hidden", visible: "Visible", reported: "Reported", recommended: "Recommended", ordinary: "Standard", restore: "Restore", hide: "Hide", unpin: "Unpin", pin: "Pin", unrecommend: "Remove recommendation", recommend: "Recommend", deleteConfirm: "Delete?",
     categoryManager: "Category management", addCategory: "New category", categoryName: "Category name", chooseCategory: "Choose category", searchTitle: "Search titles", allStatus: "All status", allCategories: "All categories", recentlyUpdated: "Recently updated", articleNumber: "Article number", sortTitle: "Title", updatedAt: "Updated", copy: "Copy", fullscreen: "Fullscreen",
-    generateFromPdf: "Generate from PDF", pdfHelp: "Preserve paragraphs · other languages are generated on demand", translateAll: "Translation preview (optional)", translateHelp: "Fill in one language; the other languages are generated and cached when readers switch languages.", translating: "Generating the requested language…", translated: "Requested languages are generated on demand and can still be edited.", translationPending: "Translation pending",
+    generateFromPdf: "Generate from PDF", pdfHelp: "Preserve paragraphs · generate Chinese, French, and English", translateAll: "Generate the other two languages", translateHelp: "Fill in one language; the other two versions will be generated automatically.", translating: "Generating the other two languages…", translated: "All three languages are ready and can be edited separately.", translationPending: "Translation pending",
     serviceStatus: "Service status", archiveSuffix: "Artist archive", font: "Font", fontSize: "Font size", fontSans: "Sans serif", fontSerif: "Serif", fontSong: "Songti", fontKaiti: "Kaiti", fontHeiti: "Heiti", fontMono: "Monospace", textColor: "Text color", bgColor: "Background color", selectedText: "Selected text", linkAddress: "Link address", linkText: "Link text", bodyEditor: "Article editor with image drop", chars: "characters", images: "images", chinese: "Chinese", french: "French", english: "English", slug: "Slug",
     archiveHoSummary: "Trilingual artist archive, artwork timeline, major Tokyo exhibitions, artwork documentation, and research sources.", archivePhilippeSummary: "Independent artist web archive: biography, exhibition timeline, Noor, catalogues, institutional archives, and art theory.",
   },
@@ -492,6 +492,63 @@ const swissAdminCss = `.a{--black:#0b0b0b;--grey:#777;--line:#dcdcdc}.a>header{d
 
 const publishButtonCss = `.modal footer .primary{color:#141311!important}`;
 
+const userAdminCss = `.user-admin{margin-top:6px}.user-admin-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-bottom:26px;border-bottom:1px solid #141311}.user-admin-head h2{margin:8px 0 0;font-size:clamp(38px,5vw,68px);line-height:.9;letter-spacing:-.06em}.user-admin-head p{max-width:470px;margin:14px 0 0;color:#77746c;font:14px/1.6 Georgia,serif}.user-admin-head button{display:inline-flex;align-items:center;gap:7px;border:1px solid #141311;background:#141311;color:#fff;padding:12px 16px;font-size:11px}.user-admin-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #e7e5df}.user-admin-stat{min-height:106px;padding:18px 14px;border-right:1px solid #e7e5df}.user-admin-stat:last-child{border-right:0}.user-admin-stat small{display:block;color:#77746c;font-size:9px;letter-spacing:.12em;text-transform:uppercase}.user-admin-stat b{display:block;margin-top:16px;font-size:30px;letter-spacing:-.04em}.user-admin-note{display:flex;align-items:flex-start;gap:9px;margin:22px 0 0;padding:12px 0;border-bottom:1px solid #e7e5df;color:#77746c;font:12px/1.55 Georgia,serif}.user-admin-note svg{flex:0 0 auto;margin-top:2px}.user-admin-table{margin-top:22px}.user-admin-table-head,.user-admin-row{display:grid;grid-template-columns:minmax(170px,1.35fr) minmax(140px,1fr) 120px 140px minmax(130px,.9fr) auto;align-items:center;gap:16px}.user-admin-table-head{padding:0 0 10px;color:#77746c;font-size:9px;letter-spacing:.1em;text-transform:uppercase}.user-admin-row{min-height:76px;padding:13px 0;border-top:1px solid #e7e5df}.user-admin-row:last-child{border-bottom:1px solid #e7e5df}.user-admin-user{min-width:0}.user-admin-user b,.user-admin-user small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.user-admin-user b{font-size:12px}.user-admin-user small{margin-top:4px;color:#77746c;font-size:10px}.user-admin-cell{color:#77746c;font-size:10px;line-height:1.4}.user-admin-status{display:inline-flex;align-items:center;gap:6px;font-size:10px}.user-admin-status:before{content:'';width:6px;height:6px;border-radius:50%;background:#b8b5ae}.user-admin-status.active:before{background:#141311}.user-admin-status.pending:before{background:#c88718}.user-admin-action{border:1px solid #d8d6d0;background:#fff;padding:7px 9px;font-size:9px;white-space:nowrap}.user-admin-empty{padding:38px 0;text-align:center;color:#77746c;font:14px/1.6 Georgia,serif;border-bottom:1px solid #e7e5df}.member-manager{display:none!important}@media(max-width:980px){.user-admin-table-head,.user-admin-row{grid-template-columns:minmax(170px,1.2fr) minmax(130px,1fr) 110px minmax(110px,.9fr) auto}.user-admin-table-head>span:nth-child(3),.user-admin-row>.user-admin-cell:nth-child(3){display:none}}@media(max-width:720px){.user-admin-head{align-items:flex-start;flex-direction:column}.user-admin-head button{width:100%;justify-content:center}.user-admin-stats{grid-template-columns:1fr 1fr}.user-admin-stat{min-height:88px}.user-admin-stat:last-child{grid-column:1/-1;border-top:1px solid #e7e5df}.user-admin-table-head{display:none}.user-admin-row{display:grid;grid-template-columns:1fr auto;gap:8px 12px;padding:17px 0}.user-admin-row>.user-admin-user{grid-column:1/-1}.user-admin-row>.user-admin-cell{font-size:10px}.user-admin-row>.user-admin-cell:nth-child(3){display:block}.user-admin-row>.user-admin-action{grid-column:2;grid-row:2/5;align-self:center}.user-admin-row>.user-admin-status{grid-column:1}.user-admin-row>.user-admin-cell:nth-child(4){grid-column:1}.user-admin-row>.user-admin-cell:nth-child(5){grid-column:1}}`;
+
+const formatUserDate = (value, lang) => {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return new Intl.DateTimeFormat(lang === "zh" ? "zh-CN" : lang === "fr" ? "fr-FR" : "en-GB", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+};
+
+const UserManagement = ({ lang, t, users, members, userSource, onManageAccess, onBack }) => {
+  const memberMap = new Map(members.map((member) => [String(member.email || "").toLowerCase(), member]));
+  const rows = users.length
+    ? users.map((user) => ({ user, member: memberMap.get(String(user.email || "").toLowerCase()) }))
+    : members.map((member) => ({ user: null, member }));
+  const activeAccess = members.filter((member) => member.access).length;
+  const pendingUsers = users.filter((user) => !user.email_confirmed_at).length;
+  return (
+    <section className="user-admin">
+      <header className="user-admin-head">
+        <div>
+          <i>ACCOUNT / ACCESS</i>
+          <h2>{t.users}</h2>
+          <p>{t.usersIntro}</p>
+        </div>
+        <button type="button" onClick={onBack}><ArrowRight size={14} />{t.contentManagement}</button>
+      </header>
+      <div className="user-admin-stats">
+        <article className="user-admin-stat"><small>{t.registeredUsers}</small><b>{users.length || members.length}</b></article>
+        <article className="user-admin-stat"><small>{t.activeAccess}</small><b>{activeAccess}</b></article>
+        <article className="user-admin-stat"><small>{t.userPending}</small><b>{pendingUsers}</b></article>
+      </div>
+      <p className="user-admin-note"><Users size={15} />{userSource === "unavailable" ? t.usersUnavailable : users.length ? `${t.registeredUsers} · ${t.userEmail}` : t.memberRecords}</p>
+      <div className="user-admin-table">
+        <div className="user-admin-table-head" aria-hidden="true"><span>{t.userName}</span><span>{t.userEmail}</span><span>{t.joinedAt}</span><span>{t.userAccess}</span><span>{t.lastSeen}</span><span>{t.userActions}</span></div>
+        {rows.length ? rows.map(({ user, member }) => {
+          const email = user?.email || member?.email || "—";
+          const access = Boolean(member?.access);
+          const confirmed = Boolean(user?.email_confirmed_at);
+          const displayName = user?.display_name || user?.user_metadata?.display_name || email.split("@")[0] || "—";
+          return <div className="user-admin-row" key={user?.id || email}>
+            <div className="user-admin-user"><b>{displayName}</b><small>{user ? (confirmed ? t.userActive : t.userPending) : t.memberRecords}</small></div>
+            <div className="user-admin-cell">{email}</div>
+            <div className="user-admin-cell">{formatUserDate(user?.created_at || member?.created_at, lang)}</div>
+            <div className={`user-admin-status ${access ? "active" : ""}`}>{access ? t.userActive : t.noAccess}</div>
+            <div className="user-admin-cell">{formatUserDate(user?.last_sign_in_at || member?.updated_at, lang)}</div>
+            <button type="button" className="user-admin-action" onClick={() => onManageAccess(member || { email, plan: "yearly", active: true, expires_at: "" })}>{t.manageAccess}</button>
+          </div>;
+        }) : <p className="user-admin-empty">{t.noUsers}</p>}
+      </div>
+    </section>
+  );
+};
+
 export default function Admin() {
   const [lang, setLang] = useState(
       () => localStorage.getItem("xart-admin-language") || "zh",
@@ -504,7 +561,10 @@ export default function Admin() {
     [pass, setPass] = useState(""),
     [items, setItems] = useState([]),
     [archives, setArchives] = useState([]),
-    [members, setMembers] = useState([]), [memberEmail, setMemberEmail] = useState(""), [memberModal, setMemberModal] = useState(false),
+    [members, setMembers] = useState([]),
+    [users, setUsers] = useState([]),
+    [userSource, setUserSource] = useState("loading"),
+    [memberEmail, setMemberEmail] = useState(""), [memberModal, setMemberModal] = useState(false),
     [meta, setMeta] = useState({ communityPosts: 0, services: {} }),
     [managedCategories, setManagedCategories] = useState([]),
     [communityPosts, setCommunityPosts] = useState([]),
@@ -512,6 +572,8 @@ export default function Admin() {
     [communityLanguage, setCommunityLanguage] = useState("all"),
     [edit, setEdit] = useState(null),
     [archiveEdit, setArchiveEdit] = useState(null),
+    [memberEdit, setMemberEdit] = useState(null),
+    [adminView, setAdminView] = useState("content"),
     [msg, setMsg] = useState(""),
     [busy, setBusy] = useState(false),
     [query, setQuery] = useState(""),
@@ -531,6 +593,7 @@ export default function Admin() {
       extraCss +
       extraEditorCss +
       archiveAdminCss +
+      userAdminCss +
       operationsCss +
       adminThemeCss +
       loginThemeCss +
@@ -625,6 +688,14 @@ export default function Admin() {
       setManagedCategories(cats.categories || []);
       setCommunityPosts(community.posts || []);
       setSystemStatus(system);
+      try {
+        const userData = await adminApi(`users?t=${Date.now()}`);
+        setUsers(userData.users || []);
+        setUserSource(userData.source || "supabase");
+      } catch {
+        setUsers([]);
+        setUserSource("unavailable");
+      }
       setMsg("");
     } catch (e) {
       setMsg(e.message);
@@ -915,7 +986,11 @@ export default function Admin() {
     } finally {
       setBusy(false);
     }
-  };  const addMember = () => { setMemberEmail(""); setMemberModal(true); }; const saveMember = async (e) => { e.preventDefault(); const email = memberEmail.trim(); if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg(t.memberRequired); return; } setBusy(true); try { await memberApi("", { method: "POST", body: JSON.stringify({ email, plan: "yearly", active: true, expires_at: "" }) }); setMemberModal(false); setMemberEmail(""); setMsg(t.memberSaved); await load(); } catch (error) { setMsg(error.message); } finally { setBusy(false); } };  const importPdf = async (event) => {
+  };  const addMember = () => { setMemberEmail(""); setMemberModal(true); }; const saveMember = async (e) => { e.preventDefault(); const email = memberEmail.trim(); if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg(t.memberRequired); return; } setBusy(true); try { await memberApi("", { method: "POST", body: JSON.stringify({ email, plan: "yearly", active: true, expires_at: "" }) }); setMemberModal(false); setMemberEmail(""); setMsg(t.memberSaved); await load(); } catch (error) { setMsg(error.message); } finally { setBusy(false); } };
+  const openMember = (member = null) => { setMemberEdit(member ? { ...blankMember, ...member } : { ...blankMember }); setMsg(""); };
+  const saveMemberEdit = async (e) => { e.preventDefault(); const email = memberEdit?.email?.trim(); if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setMsg(t.memberRequired); return; } setBusy(true); try { await memberApi("", { method: "POST", body: JSON.stringify({ email, plan: memberEdit.plan, active: memberEdit.active !== false, expires_at: memberEdit.expires_at || "" }) }); setMemberEdit(null); setMsg(t.memberSaved); await load(); } catch (error) { setMsg(error.message); } finally { setBusy(false); } };
+  const removeMember = async (member) => { if (!confirm(`${t.confirm} “${member.email}”?`)) return; setBusy(true); try { await memberApi(`?email=${encodeURIComponent(member.email)}`, { method: "DELETE" }); setMsg(t.deleted); await load(); } catch (error) { setMsg(error.message); } finally { setBusy(false); } };
+  const importPdf = async (event) => {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file) return;
@@ -1323,6 +1398,10 @@ export default function Admin() {
             <Eye size={15} />
             <span>{t.view}</span>
           </a>
+          <button type="button" onClick={() => setAdminView((value) => value === "users" ? "content" : "users")}>
+            <Users size={15} />
+            <span>{adminView === "users" ? t.contentManagement : t.users}</span>
+          </button>
           <button
             onClick={() => {
               sessionStorage.removeItem("xart-admin-token");
@@ -1335,6 +1414,10 @@ export default function Admin() {
         </nav>
       </header>
       <section className="content">
+        {msg && <div className="notice">{msg}</div>}
+        {adminView === "users" ? (
+          <UserManagement lang={lang} t={t} users={users} members={members} userSource={userSource} onManageAccess={openMember} onBack={() => setAdminView("content")} />
+        ) : <>
         <div className="heading">
           <div>
             <h1>{t.articles}</h1>
@@ -1345,7 +1428,6 @@ export default function Admin() {
             {t.add}
           </button>
         </div>
-        {msg && <div className="notice">{msg}</div>}
         <section className="admin-module archive-manager">
           <header>
             <div>
@@ -1676,6 +1758,7 @@ export default function Admin() {
         </div>
         {!busy && !filtered.length && <div className="empty">{t.empty}</div>}
         {busy && <p className="empty">{t.working}</p>}
+        </>}
       </section>
       {edit && (
         <div className="shade">
@@ -2064,6 +2147,29 @@ export default function Admin() {
             <footer>
               <button type="button" onClick={() => setArchiveEdit(null)}>{t.close}</button>
               <button className="primary" disabled={busy}>{busy ? t.saving : t.saveArchive}</button>
+            </footer>
+          </form>
+        </div>
+      )}
+      {memberEdit && (
+        <div className="shade">
+          <form className="modal archive-modal member-modal" onSubmit={saveMemberEdit}>
+            <div className="modalhead">
+              <div><i>SUBSCRIBER ACCESS</i><h2>{memberEdit.email ? t.edit : t.addMember}</h2></div>
+              <button type="button" onClick={() => setMemberEdit(null)} aria-label={t.close}><X /></button>
+            </div>
+            <section>
+              <label>{t.memberEmail}<input type="email" value={memberEdit.email} onChange={(e) => setMemberEdit({ ...memberEdit, email: e.target.value })} required /></label>
+              <label>{t.memberPlan}<div className="choices">
+                <button type="button" aria-pressed={memberEdit.plan === "yearly"} onClick={() => setMemberEdit({ ...memberEdit, plan: "yearly" })}>{t.memberYearly}</button>
+                <button type="button" aria-pressed={memberEdit.plan === "custom"} onClick={() => setMemberEdit({ ...memberEdit, plan: "custom" })}>{t.memberCustom}</button>
+              </div></label>
+              <label>{t.memberExpires}<input type="date" value={memberEdit.expires_at ? String(memberEdit.expires_at).slice(0, 10) : ""} onChange={(e) => setMemberEdit({ ...memberEdit, expires_at: e.target.value })} /></label>
+              <div className="toggles"><label><input type="checkbox" checked={memberEdit.active !== false} onChange={(e) => setMemberEdit({ ...memberEdit, active: e.target.checked })} />{t.memberActive}</label></div>
+            </section>
+            <footer>
+              <button type="button" onClick={() => setMemberEdit(null)}>{t.close}</button>
+              <button className="primary" disabled={busy}>{busy ? t.saving : t.saveMember}</button>
             </footer>
           </form>
         </div>
