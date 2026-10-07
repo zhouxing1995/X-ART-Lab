@@ -387,7 +387,30 @@ export default function App(){
   },[]);
   useEffect(()=>{const params=new URLSearchParams(location.search),sessionId=params.get("session_id")||localStorage.getItem("xart-stripe-session");if(params.get("checkout")==="cancelled")history.replaceState({},"",location.pathname);if(!sessionId)return;fetch(`/api/verify-checkout-session?session_id=${encodeURIComponent(sessionId)}&t=${Date.now()}`,{cache:"no-store"}).then(r=>r.json()).then(data=>{if(data.active){const plan=String(data.plan||"");setSubscribed(true);setSubscriptionPlan(plan);localStorage.setItem("xart-stripe-session",sessionId);localStorage.setItem("xart-subscription-plan",plan)}else{setSubscribed(false);setSubscriptionPlan("");localStorage.removeItem("xart-stripe-session");localStorage.removeItem("xart-subscription-plan")}if(params.get("session_id"))history.replaceState({},"",location.pathname)}).catch(()=>{})},[]);
   useEffect(()=>{
-    if(!open?.id||open.content?.[lang])return;
+    if(!lang)return;
+    let active=true;
+    const pending=items.filter(item=>item?.id&&item.language&&item.language!=="all"&&item.language!==lang&&String(item.id)!==String(open?.id)).slice(0,12);
+    if(!pending.length)return;
+    setTranslationBusy(true);
+    Promise.all(pending.map(item=>fetch(`/api/articles?id=${encodeURIComponent(item.id)}&language=${lang}`,{cache:"no-store"})
+      .then(response=>response.ok?response.json():null)
+      .then(data=>data?.article||null)
+      .catch(()=>null)))
+      .then(articles=>{
+        if(!active)return;
+        const updates=articles.filter(Boolean),byId=new Map(updates.map(article=>[String(article.id),article]));
+        if(!updates.length)return;
+        const localize=item=>{
+          const article=byId.get(String(item.id));
+          return article?{...item,language:article.language||item.language,locked:Boolean(article.locked),published:Boolean(article.published),zh:[article.zh_title,article.zh_summary],fr:[article.fr_title,article.fr_summary],en:[article.en_title,article.en_summary],content:{zh:article.zh_content,fr:article.fr_content,en:article.en_content}}:item;
+        };
+        setItems(current=>current.map(localize));
+      })
+      .finally(()=>{if(active)setTranslationBusy(false)});
+    return()=>{active=false};
+  },[lang,items,open?.id]);
+  useEffect(()=>{
+    if(!open?.id||open.language===lang||(open.language==="all"&&open.content?.[lang]))return;
     let active=true;
     setTranslationBusy(true);
     fetch(`/api/articles?id=${encodeURIComponent(open.id)}&language=${lang}`,{cache:"no-store"})
@@ -402,7 +425,7 @@ export default function App(){
       .catch(()=>{})
       .finally(()=>{if(active)setTranslationBusy(false)});
     return()=>{active=false};
-  },[open?.id,lang]);
+  },[open?.id,open?.language,lang]);
   const openArticle=item=>{try{const history=JSON.parse(localStorage.getItem("xart-recent-reading")||"[]"),id=item.id||item.n;localStorage.setItem("xart-recent-reading",JSON.stringify([{id},...history.filter(value=>String(value.id)!==String(id))].slice(0,20)))}catch{}setOpen(item)};
   const login=()=>location.replace("/auth.html?next=/");const logout=async()=>{try{localStorage.removeItem("xart-auth-complete");localStorage.removeItem("xart-stripe-session");localStorage.removeItem("xart-subscription-plan");Object.keys(localStorage).filter(key=>/^sb-.*-auth-token$/.test(key)).forEach(key=>localStorage.removeItem(key))}catch{}setAuthenticated(false);setSubscribed(false);setSubscriptionPlan("");setOpenArchive(null);try{const client=getAuthClient();if(client)await Promise.race([client.auth.signOut(),new Promise(resolve=>setTimeout(resolve,2500))])}catch{}location.replace("/auth.html?next=/")};
   const canOpenArchives=authenticated&&(memberAccess||(subscribed&&ARCHIVE_ACCESS_PLANS.has(subscriptionPlan)));
