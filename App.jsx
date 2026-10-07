@@ -410,7 +410,7 @@ export default function App(){
     return()=>{active=false};
   },[lang,items,open?.id]);
   useEffect(()=>{
-    if(!open?.id||open.language===lang||(open.language==="all"&&open.content?.[lang]))return;
+    if(!open?.id)return;
     let active=true;
     setTranslationBusy(true);
     fetch(`/api/articles?id=${encodeURIComponent(open.id)}&language=${lang}`,{cache:"no-store"})
