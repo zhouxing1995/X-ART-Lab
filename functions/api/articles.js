@@ -51,17 +51,25 @@ async function translateRich(ai,text,source,target){
   }
   if(batch)batches.push(batch);
   const translated=[];
-  for(const item of batches)translated.push(await translatePlain(ai,item,source,target));
+  translated.push(...await Promise.all(batches.map(item=>translatePlain(ai,item,source,target))));
   return translated.join("").replace(/XARTTOKEN\s*(\d+)\s*ENDTOKEN/gi,(_,index)=>protectedParts[Number(index)]||"");
+}
+
+async function translateOne(ai,body,source,target){
+  const [title,summary,content]=await Promise.all([
+    translatePlain(ai,body[source+"_title"],source,target),
+    translatePlain(ai,body[source+"_summary"],source,target),
+    translateRich(ai,body[source+"_content"],source,target)
+  ]);
+  body[target+"_title"]=title;
+  body[target+"_summary"]=summary;
+  body[target+"_content"]=normalizeContent(content);
+  return body;
 }
 
 async function translateArticle(ai,body){
   const source=body.language;
-  for(const target of ["zh","fr","en"].filter(code=>code!==source)){
-    body[target+"_title"]=await translatePlain(ai,body[source+"_title"],source,target);
-    body[target+"_summary"]=await translatePlain(ai,body[source+"_summary"],source,target);
-    body[target+"_content"]=normalizeContent(await translateRich(ai,body[source+"_content"],source,target));
-  }
+  await Promise.all(["zh","fr","en"].filter(code=>code!==source).map(target=>translateOne(ai,body,source,target)));
   body.language="all";
 }
 
@@ -93,8 +101,25 @@ export async function onRequestGet({request,env}){
   const url=new URL(request.url),fileId=Number(url.searchParams.get("file"));
   if(fileId){const row=await env.DB.prepare("SELECT pdf_name,pdf_data,published FROM articles WHERE id=?").bind(fileId).first();if(!row||!row.pdf_data||(!row.published&&!authorized(request,env)))return json({error:"PDF not found"},404);const bytes=Uint8Array.from(atob(row.pdf_data),character=>character.charCodeAt(0));return new Response(bytes,{headers:{"content-type":"application/pdf","content-disposition":`attachment; filename*=UTF-8''${encodeURIComponent(row.pdf_name||"article.pdf")}`,"cache-control":"private,max-age=300"}})}
   const all=url.searchParams.get("all")==="1";
+  const requestedId=Number(url.searchParams.get("id"));
+  const requestedLanguage=url.searchParams.get("language");
   if(all&&!authorized(request,env))return json({error:"管理员登录已失效"},401);
   const fields="id,n,tag,minutes,locked,published,language,cover_image,zh_title,zh_summary,zh_content,fr_title,fr_summary,fr_content,en_title,en_summary,en_content,created_at,updated_at,pdf_name,pdf_size,audio_generated,CASE WHEN pdf_data<>'' THEN 1 ELSE 0 END has_pdf";
+  if(requestedId&&["zh","fr","en"].includes(requestedLanguage)){
+    const row=await env.DB.prepare(`SELECT ${fields} FROM articles WHERE id=?`).bind(requestedId).first();
+    if(!row)return json({error:"Article not found"},404);
+    const article={...row,locked:Boolean(row.locked),published:Boolean(row.published)};
+    for(const code of ["zh","fr","en"])article[code+"_content"]=stripEditorialNote(article[code+"_content"]);
+    const source=["zh","fr","en"].find(code=>String(article[code+"_title"]||"").trim()&&String(article[code+"_content"]||"").trim())||article.language||"zh";
+    if(requestedLanguage!==source&&!String(article[requestedLanguage+"_title"]||"").trim()&&!String(article[requestedLanguage+"_content"]||"").trim()){
+      if(!env.AI)return json({error:"Translation service unavailable"},503);
+      try{
+        await translateOne(env.AI,article,source,requestedLanguage);
+        await env.DB.prepare(`UPDATE articles SET ${requestedLanguage}_title=?,${requestedLanguage}_summary=?,${requestedLanguage}_content=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(article[requestedLanguage+"_title"],article[requestedLanguage+"_summary"],article[requestedLanguage+"_content"],requestedId).run();
+      }catch(error){return json({error:"Translation failed",detail:String(error?.message||"")},502)}
+    }
+    return json({article});
+  }
   const query=all?`SELECT ${fields} FROM articles ORDER BY CAST(n AS INTEGER) DESC,id DESC`:`SELECT ${fields} FROM articles WHERE published=1 ORDER BY CAST(n AS INTEGER) DESC,id DESC`;
   const {results}=await env.DB.prepare(query).all();
   let communityPosts=0;if(all)try{communityPosts=Number((await env.DB.prepare("SELECT COUNT(*) count FROM community_posts WHERE parent_id IS NULL").first())?.count||0)}catch{}
@@ -136,20 +161,15 @@ export async function onRequestPost({request,env}){
   for(const code of ["zh","fr","en"])body[code+"_content"]=stripEditorialNote(body[code+"_content"]);
   if(!["zh","fr","en","all"].includes(body.language))return json({error:"不支持的文章语言"},400);
   for(const field of ["title","summary","content"])if(!body[body.language+"_"+field]&&body.language!=="all")return json({error:"缺少字段："+field},400);
-  // New articles and explicit retranslation edits use the selected source
-  // language to refresh all three stored language versions.
-  if(body.language!=="all"&&(!body.id||body.retranslate)){
-    const source=body.language;
-    let translated=false;
-    if(env.AI){
-      try{await translateArticle(env.AI,body);translated=true}catch{}
-    }
-    if(!translated){
-      for(const target of ["zh","fr","en"].filter(code=>code!==source))
-        for(const field of ["title","summary","content"])
-          body[target+"_"+field]=body[source+"_"+field]||"";
-    }
-    body.language="all";
+  // Store one source language. Public readers generate and cache the requested
+  // language when they switch languages for the first time.
+  if(body.language!=="all"){
+    for(const target of ["zh","fr","en"])
+      if(target!==body.language&&!body.id){
+        body[target+"_title"]="";
+        body[target+"_summary"]="";
+        body[target+"_content"]="";
+      }
   }else if(body.id){
     body.language="all";
   }
